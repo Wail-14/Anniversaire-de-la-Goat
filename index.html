@@ -1,156 +1,293 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>🎁 Surprise</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire ! 🎉</title>
+    <style>
+        /* Variables de couleur Pro */
+        :root {
+            --primary: #0077b6;     /* Beau bleu moderne */
+            --primary-light: #00b4d8;
+            --bg-gradient: linear-gradient(135deg, #e0f2fe, #bae6fd); /* Dégradé bleu/blanc doux */
+            --text: #1e293b;
+            --white: #ffffff;
+        }
 
-<style>
-/* ===== GLOBAL ===== */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #e6f0ff, #ffffff);
-  overflow: hidden;
-}
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-/* ===== NAVBAR ===== */
-.navbar {
-  background: white;
-  border-bottom: 3px solid #4da3ff;
-  padding: 15px;
-  text-align: center;
-  font-weight: bold;
-  color: #2c6fff;
-}
+        /* Barre de navigation Pro (Blanc et Bleu) */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary);
+        }
+        nav .logo {
+            font-weight: 800;
+            font-size: 1.3em;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        nav .status {
+            background-color: #dbeafe;
+            color: var(--primary);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
 
-/* ===== PAGES ===== */
-.page {
-  display: none;
-  height: calc(100vh - 60px);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 20px;
-}
+        /* Conteneur Principal */
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-.active {
-  display: flex;
-}
+        /* Cartes de contenu (les "Pages") */
+        .page-card {
+            background: var(--white);
+            max-width: 550px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            display: none; /* Caché par défaut */
+            animation: fadeIn 0.5s ease-out forwards;
+        }
 
-/* ===== BUTTONS ===== */
-button {
-  margin-top: 15px;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background: #2c6fff;
-  color: white;
-  font-size: 16px;
-  transition: 0.2s;
-}
+        /* Rendre la première page visible au chargement */
+        .page-card.active {
+            display: block;
+        }
 
-button:hover {
-  background: #174bcc;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* ===== TITLE ===== */
-h1 {
-  font-size: 40px;
-  color: #2c6fff;
-}
+        /* Typographie */
+        h1 {
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 1.8em;
+            margin-top: 0;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 30px;
+        }
 
-/* ===== SMALL TEXT ===== */
-p {
-  font-size: 18px;
-}
+        /* Boutons au look Professionnel */
+        .btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px 28px;
+            font-size: 1.05em;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 119, 182, 0.2);
+            display: inline-block;
+            text-decoration: none;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 119, 182, 0.3);
+        }
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            color: var(--text);
+            transform: translateY(-2px);
+        }
 
-/* ===== SELECT ===== */
-select {
-  padding: 10px;
-  font-size: 16px;
-  margin-top: 10px;
-}
+        /* Inputs / Listes déroulantes */
+        select {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.05em;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            background-color: #f8fafc;
+            color: var(--text);
+            margin-bottom: 25px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        select:focus {
+            border-color: var(--primary);
+        }
 
-/* ===== FINAL BOX ===== */
-.box {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-</style>
+        /* Zone d'indice masquée */
+        .box-indice {
+            background: #f0fdf4;
+            border: 2px dashed #22c55e;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #166534;
+            display: none;
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="navbar">💙 Surprise d'anniversaire 💙</div>
+    <!-- BARRE DE NAVIGATION BLANCHE ET BLEUE -->
+    <nav>
+        <div class="logo">🎉 HBD_GOAT</div>
+        <div class="status">Pour la meilleure ✨</div>
+    </nav>
 
-<!-- PAGE 1 -->
-<div class="page active" id="page1">
-  <h1>Joyeux Anniversaire 🎉</h1>
-  <p>J’ai préparé quelque chose pour toi…</p>
-  <button onclick="go(2)">Continuer</button>
-</div>
+    <!-- ZONE DE TEXTE / PAGES -->
+    <div class="main-container">
 
-<!-- PAGE 2 -->
-<div class="page" id="page2">
-  <div class="box">
-    <p>Tu veux un indice pour ton cadeau ? 👀</p>
-    <button onclick="showHint()">Oui</button>
-    <button onclick="showHint()">Non</button>
-    <p id="hint" style="display:none; margin-top:15px;">
-      L’indice est simple… ce n’est pas un objet 🎁
-    </p>
-  </div>
-  <button onclick="go(3)">Continuer</button>
-</div>
+        <!-- PAGE 1 : ACCUEIL -->
+        <div class="page-card active" id="page1">
+            <h1>Joyeux Anniversaire ! 🎂</h1>
+            <p>Aujourd'hui c'est un jour sacré. Impossible de faire un truc classique pour la GOAT, alors je t'ai codé ton propre espace VIP. Prête à voir ce qui t'attend ?</p>
+            <button class="btn" onclick="changerPage('page2')">Continuer ➡️</button>
+        </div>
 
-<!-- PAGE 3 -->
-<div class="page" id="page3">
-  <div class="box">
-    <p>Tu veux me voir ? 😊</p>
+        <!-- PAGE 2 : L'INDICE CADEAU -->
+        <div class="page-card" id="page2">
+            <h2>🎁 Ton cadeau de cette année...</h2>
+            <p>Je sais que tu es une grande curieuse. Tu veux un indice exclusif sur ce que je te prépare ou tu préfères garder la surprise ?</p>
+            
+            <button class="btn" onclick="montrerIndice('oui')">Grave ! Donne l'indice 😍</button>
+            <button class="btn btn-secondary" onclick="montrerIndice('non')">Non, j'attends 😇</button>
 
-    <select id="date">
-      <option>Choisis une date</option>
-      <option>Demain</option>
-      <option>Ce week-end</option>
-      <option>La semaine prochaine</option>
-    </select>
+            <!-- L'indice secret qui s'affichera dans tous les cas -->
+            <div class="box-indice" id="zoneIndice"></div>
+            
+            <button class="btn" id="btnSuivantIndice" style="display:none; margin-top: 20px; background: #0f172a;" onclick="changerPage('page3')">Passer à la suite ✨</button>
+        </div>
 
-    <br>
-    <button onclick="go(4)">Confirmer</button>
-  </div>
-</div>
+        <!-- PAGE 3 : L'AGENDA (LISTE DÉROULANTE) -->
+        <div class="page-card" id="page3">
+            <h2>📅 On se capte quand ?</h2>
+            <p>Puisque c'est ton anniversaire, c'est toi la boss. Choisis la date où tu es dispo pour qu'on aille fêter ça en vrai (c'est moi qui régale évidemment) :</p>
+            
+            <select id="choixDate">
+                <option value="" disabled selected>-- Choisis ton créneau --</option>
+                <option value="Ce week-end (Samedi soir)">Ce week-end (Samedi soir) 🥂</option>
+                <option value="Ce week-end (Dimanche après-m)">Ce week-end (Dimanche après-m) 🍰</option>
+                <option value="Mercredi prochain en fin d'aprem">Mercredi prochain en fin d'après-midi ☕</option>
+                <option value="Vendredi soir prochain (Grosse soirée)">Vendredi soir prochain (Grosse soirée) 🍕</option>
+            </select>
 
-<!-- PAGE 4 -->
-<div class="page" id="page4">
-  <h1>💙 Réservation confirmée 💙</h1>
-  <p>Je te recontacte très vite…</p>
-  <button onclick="go(5)">Message final</button>
-</div>
+            <button class="btn" onclick="reserverDate()">Confirmer ma réservation 🔒</button>
+        </div>
 
-<!-- PAGE 5 -->
-<div class="page" id="page5">
-  <div class="box">
-    <h2>💌</h2>
-    <p id="finalText">
-      (Tu écriras ton message ici)
-    </p>
-  </div>
-</div>
+        <!-- PAGE 4 : CONFIRMATION & MESSAGE DE FIN -->
+        <div class="page-card" id="page4">
+            <h2>✅ Réservation Validée !</h2>
+            <p>C'est noté dans le calendrier des légendes pour : <br><strong id="dateValidee" style="color: var(--primary); font-size: 1.2em;"></strong></p>
+            
+            <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 25px 0;">
+            
+            <!-- TON MESSAGE PERSO ICI -->
+            <h3>Un petit mot pour la fin... 💖</h3>
+            <p style="text-align: left; font-size: 1em;">
+                [Écris ton texte personnalisé ici mon pote ! Dis-lui à quel point elle compte pour toi, remercie-la d'être là, rajoute des délires à vous, bref fais parler ton cœur. Le site est officiellement fini et réussi ! 🤝]
+            </p>
+            
+            <p style="font-size: 1.5em; margin: 0;">💐🌸🌹🌷🌻</p>
+        </div>
 
-<script>
-function go(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page' + page).classList.add('active');
-}
+    </div>
 
-function showHint() {
-  document.getElementById('hint').style.display = 'block';
-}
-</script>
+    <!-- LOGIQUE JAVASCRIPT DU SITE -->
+    <script>
+        // Fonction pour naviguer d'une fausse page à l'autre
+        function changerPage(idPage) {
+            // Cache toutes les pages
+            document.querySelectorAll('.page-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            // Affiche la bonne page
+            document.getElementById(idPage).classList.add('active');
+        }
 
+        // Gestion de l'indice (Gentil mais forcé !)
+        function montrerIndice(choix) {
+            const zone = document.getElementById('zoneIndice');
+            const btnSuivant = document.getElementById('btnSuivantIndice');
+            
+            if(choix === 'oui') {
+                zone.innerText = "🔍 INDICE : Ça ne tient pas dans une enveloppe, ça se mange ou ça se vit, et tu vas kiffer ! 🤫";
+                zone.style.borderColor = "#22c55e";
+                zone.style.background = "#f0fdf4";
+                zone.style.color = "#166534";
+            } else {
+                zone.innerText = "😈 Mdr t'as cru ? Je suis trop gentil pour ne rien te dire. INDICE : Ça ne tient pas dans une enveloppe, ça se mange ou ça se vit... prépare-toi ! 🤫";
+                zone.style.borderColor = "#3b82f6";
+                zone.style.background = "#eff6ff";
+                zone.style.color = "#1d4ed8";
+            }
+            
+            zone.style.display = 'block';
+            btnSuivant.style.display = 'block';
+        }
+
+        // Validation de la liste déroulante
+        function reserverDate() {
+            const select = document.getElementById('choixDate');
+            const dateSelectionnee = select.value;
+            
+            if(dateSelectionnee === "") {
+                alert("Sélectionne une date dans la liste avant de valider ! 😉");
+                return;
+            }
+            
+            // Met à jour le texte de la dernière page avec la bonne date
+            document.getElementById('dateValidee').innerText = dateSelectionnee;
+            
+            // Passe à la page finale
+            changerPage('page4');
+        }
+    </script>
 </body>
 </html>
