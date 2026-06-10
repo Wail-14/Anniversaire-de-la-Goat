@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire ! 🎉</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            color: #4a5568;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin: 40px auto;
+        }
+
+        h1 {
+            color: #ff477e;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Boutons */
+        .btn {
+            background-color: #ff477e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #ff7096;
+        }
+
+        /* Section Agenda */
+        .agenda {
+            margin-top: 40px;
+            border-top: 2px dashed #ffc2d1;
+            padding-top: 20px;
+        }
+
+        /* Fleurs Numériques */
+        .flower-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            display: none;
+            /* Caché au début */
+        }
+
+        .flower {
+            font-size: 50px;
+            animation: pop 0.5s ease forward;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🎉 Joyeux Anniversaire ! 🎂</h1>
+        <p>Ma meilleure pote, j'ai failli oublier l'heure (oups !), mais impossible de ne pas te fêter ça en grand.
+            Voici ton petit site web personnalisé rien que pour toi ! 💖</p>
+
+        <p><em>[Insère un petit mot personnalisé ici : un souvenir marrant, pourquoi c'est la meilleure, etc.]</em></p>
+
+        <div class="agenda">
+            <h3>📅 Ton Agenda Cadeau</h3>
+            <p>Choisis quand on se capte pour fêter ça en vrai (c'est moi qui régale) :</p>
+
+            <a href="https://calendly.com" target="_blank" class="btn">Réserver notre moment 🗓️</a>
+            <p style="font-size: 0.9em; color: #718096; margin-top: 5px;">(Ou envoie-moi un SMS direct si tu préfères !)
+            </p>
+        </div>
+
+        <div class="agenda">
+            <h3>💐 Un petit geste pour la fin...</h3>
+            <button class="btn" onclick="offrirFleurs()">Clique ici pour ton cadeau</button>
+
+            <div class="flower-container" id="fleurs">
+                <div class="flower">🌸</div>
+                <div class="flower">🌹</div>
+                <div class="flower">🌺</div>
+                <div class="flower">🌻</div>
+                <div class="flower">🌷</div>
+            </div>
+            <p id="statut-fleurs" style="margin-top: 15px; font-weight: bold; color: #ff477e;"></p>
+        </div>
+    </div>
+
+    <script>
+        function offrirFleurs() {
+            document.getElementById('fleurs').style.display = 'flex';
+            document.getElementById('statut-fleurs').innerText = "Des fleurs éternelles pour une pote en or ! 💐✨";
+
+            // Petit effet de confettis bonus dans la console ou simple alerte
+            alert("✨ Des fleurs virtuelles rien que pour toi ! ✨");
+        }
+    </script>
+</body>
+
+</html>
