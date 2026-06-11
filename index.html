@@ -289,7 +289,7 @@
             transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.4s, z-index 0s 0.4s, opacity 0.3s 0.4s;
         }
 
-        /* AJUSTEMENT SPÉCIAL POUR LA ZONE PHOTO DE FIN */
+        /* ZONE PHOTO SOUVENIR CORRIGÉE */
         .zone-photo-souvenir {
             display: flex;
             justify-content: center;
@@ -305,7 +305,7 @@
         .zone-photo-souvenir img {
             max-width: 100%;
             height: auto;
-            max-height: 240px; /* Taille réduite pour tout faire tenir à l'écran */
+            max-height: 240px; /* Conserve la taille réduite */
             display: block;
             object-fit: cover;
         }
@@ -480,15 +480,15 @@
             <button class="btn" id="btnConfirmationFinale" style="margin-top: 30px; display: none;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
         </div>
 
-        <!-- PAGE 5 : MESSAGE FINAL ET PHOTO AJUSTÉE -->
+        <!-- PAGE 5 : MESSAGE FINAL ET PHOTO REDESSINÉE -->
         <div class="page-card" id="page5">
             <h2 style="color: #2563eb; margin-bottom: 5px;">🎉 Félicitations !</h2>
             <p style="font-size: 1.05em; font-weight: 700; color: #1e3a8a; margin-bottom: 5px;">Tu viens officiellement de réserver du temps avec ton goat préféré. 🎉</p>
             <p style="margin-bottom: 10px;">Créneau bloqué : <strong>Vendredi 12 Juin (Sortie avec le GOAT)</strong></p>
             
-            <!-- CODE MIS À JOUR AVEC LE BON NOM DE FICHIER ET TAILLE AUTO-AJUSTÉE -->
+            <!-- NOM RESTAURÉ EN image_582659.png -->
             <div class="zone-photo-souvenir">
-                <img src="image_579f33.jpg" alt="Notre souvenir ensemble 💜">
+                <img src="image_582659.png" alt="Notre souvenir ensemble 💜">
             </div>
             
             <h3 style="margin-top: 10px; margin-bottom: 5px;">Mon petit mot pour toi 💖</h3>
