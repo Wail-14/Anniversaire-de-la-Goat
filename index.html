@@ -265,7 +265,7 @@
             opacity: 1;
         }
 
-        /* PAGE SPECIAL FLEURS ET CADRE FINAL - THÈME DEGRADÉ BLEU */
+        /* PAGE SPECIAL FLEURS ET CADRE FINAL */
         .page-fleurs-geantes {
             display: none;
             position: fixed;
@@ -288,6 +288,23 @@
             padding: 20px;
             animation: pulseFete 1.5s infinite ease-in-out;
         }
+        
+        .texte-retardataire {
+            color: #e0f2fe;
+            font-size: 1.6em;
+            font-weight: 600;
+            margin-top: 15px;
+            z-index: 10;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s ease;
+        }
+        .texte-retardataire.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         @keyframes pulseFete {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -335,7 +352,7 @@
         <!-- PAGE 1 BIS : DISCLAIMER BLAGUE -->
         <div class="page-card" id="page1bis">
             <h2>Petite mise en garde... 👀</h2>
-            <p>Avant de continuer : ce site va te laisser penser avoir le choix... <strong>Mais en réalité, tu n'as absolument aucun choix ici.</strong> C'est ma dictature d'anniversaire.</p>
+            <p>Before continuation : ce site va te laisser penser avoir le choix... <strong>Mais en réalité, tu n'as absolument aucun choix ici.</strong> C'est ma dictature d'anniversaire.</p>
             <button class="btn" onclick="changerPage('page2')">Découvrir la suite 🚀</button>
         </div>
 
@@ -398,7 +415,7 @@
             <div class="wrapper-enveloppe" id="wrapperEnveloppe">
                 <div class="enveloppe" id="maEnveloppe" onclick="clicEnveloppe(event)">
                     <div class="lettre">
-                        "Tu te déplaceras sans vraiment choisir la direction. Si tu veux un autre indice, attends le vendredi 12 juin."
+                        Tu te déplaceras sans vraiment choisir la direction. Si tu veux un autre indice, attends le vendredi 12 juin.
                     </div>
                 </div>
             </div>
@@ -428,12 +445,14 @@
     <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="fermerPageFleurs()">
         <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
         <div style="color: white; font-size: 1.2em; opacity: 0.9; margin-top: 20px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">Regarde toutes ces fleurs géantes éclater pour toi ! 😍💙</div>
+        <div id="texteDelayed" class="texte-retardataire">Ce site a été créé spécialement pour toi.</div>
         <button class="btn" style="max-width: 260px; margin-top: 40px; z-index: 10; background: #ffffff; color: #1e3a8a; font-size: 1.1em; box-shadow: 0 10px 25px rgba(0,0,0,0.3);" onclick="event.stopPropagation(); window.location.reload();">Retour à l'accueil 🏠</button>
     </div>
 
     <script>
         let clicsRestants = 5;
         let intervalleFleurs;
+        let enveloppeA_EteOuverte = false; // Permet de verrouiller l'affichage du bouton de confirmation
 
         // Écouteur global pour refermer l'enveloppe
         document.addEventListener('click', function(e) {
@@ -442,12 +461,13 @@
             
             if (wrapper.style.display === 'flex' && env.classList.contains('open') && !env.contains(e.target)) {
                 env.classList.remove('open');
-                document.getElementById('btnConfirmationFinale').style.display = 'none';
+                // On ne cache plus le bouton ici si l'enveloppe a déjà été ouverte une fois
             }
         });
 
         function retourZero() {
             retourIndice();
+            enveloppeA_EteOuverte = false;
             document.getElementById('erreurCalcul').style.display = 'none';
             document.getElementById('blocCalculSecret').style.display = 'block';
             document.getElementById('reponseJours').value = '';
@@ -510,7 +530,7 @@
             if(choix === 'oui') {
                 textIntro.innerText = "🔍 Voici ton indice durement gagné !";
                 boutons.style.display = 'none';
-                zone.innerHTML = "🔓 CADEAU DÉVERROUILLÉ !<br><br>🔍 INDICE GLOBAL :<br>\"Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫\"";
+                zone.innerHTML = "🔓 CADEAU DÉVERROUILLÉ !<br><br>🔍 INDICE GLOBAL :<br>Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫";
                 zone.style.display = 'block';
                 btnSuivant.style.display = 'block';
                 btnRetour.style.display = 'block'; 
@@ -572,12 +592,13 @@
             
             if(!env.classList.contains('open')) {
                 env.classList.add('open');
+                enveloppeA_EteOuverte = true; // Flag activé pour de bon
                 setTimeout(() => {
                     document.getElementById('btnConfirmationFinale').style.display = 'block';
                 }, 600);
             } else {
                 env.classList.remove('open');
-                document.getElementById('btnConfirmationFinale').style.display = 'none';
+                // On ne masque pas le bouton car enveloppeA_EteOuverte est vrai et il doit rester visible pour de bon
             }
         }
 
@@ -587,8 +608,14 @@
 
         function declencherExplosionFinale() {
             document.getElementById('pageFinaleFleurs').style.display = 'flex';
+            document.getElementById('texteDelayed').classList.remove('visible'); // Reset
             grossePluieDeFleurs();
             genererFleursGeantes();
+
+            // Fait apparaître le texte personnalisé exactement 3 secondes après l'explosion
+            setTimeout(() => {
+                document.getElementById('texteDelayed').classList.add('visible');
+            }, 3000);
         }
 
         function fermerPageFleurs() {
