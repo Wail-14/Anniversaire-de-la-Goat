@@ -191,7 +191,7 @@
             animation: shake 0.4s ease-in-out;
         }
 
-        /* SYSTÈME ENVELOPPE INTERACTIVE INDICE (TEXTE SÉCURISÉ & CACHÉ) */
+        /* SYSTÈME ENVELOPPE INTERACTIVE INDICE */
         .wrapper-enveloppe {
             display: none;
             justify-content: center;
@@ -248,10 +248,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0; /* Totalement invisible au départ */
+            opacity: 0;
         }
         
-        /* Classe d'ouverture de l'enveloppe */
         .enveloppe.open::before {
             transform: rotateX(180deg);
             z-index: 1;
@@ -263,10 +262,10 @@
             min-height: 110px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.25);
             border: 2px solid #3b82f6;
-            opacity: 1; /* Devient visible uniquement à l'ouverture */
+            opacity: 1;
         }
 
-        /* PAGE SPECIAL FLEURS ET CADRE FINAL - THÈME DEGRADÉ BLEU FAVORITE */
+        /* PAGE SPECIAL FLEURS ET CADRE FINAL - THÈME DEGRADÉ BLEU */
         .page-fleurs-geantes {
             display: none;
             position: fixed;
@@ -294,14 +293,13 @@
             50% { transform: scale(1.05); }
         }
         
-        /* FLEURS ENORMES ET TRÈS APPARENTES */
         .fleur-instanciee {
             position: absolute;
             pointer-events: none;
             opacity: 0;
             animation: animationFleurGeante 6.5s linear forwards;
             z-index: 2;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); /* Rend les fleurs ultra voyantes */
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
             line-height: 1;
         }
         @keyframes animationFleurGeante {
@@ -327,11 +325,18 @@
 
     <div class="main-container">
 
-        <!-- PAGE 1 : INTRODUCTION BLAGUE -->
+        <!-- PAGE 1 : INTRODUCTION DOUCE -->
         <div class="page-card active" id="page1">
             <h1>Bienvenue Arige ! 🥳💜</h1>
-            <p>Petite mise en garde avant de commencer : ce site va te laisser penser avoir le choix... <strong>Mais en réalité, tu n'as absolument aucun choix ici.</strong> C'est ma dictature d'anniversaire. 👀</p>
-            <button class="btn" onclick="changerPage('page2')">Suivant ➡️</button>
+            <p>Aujourd'hui c'est ton jour, alors j'ai voulu te préparer quelque chose d'un peu différent. Rien d'incroyable, juste un petit site fait spécialement pour toi.</p>
+            <button class="btn" onclick="changerPage('page1bis')">Suivant ➡️</button>
+        </div>
+
+        <!-- PAGE 1 BIS : DISCLAIMER BLAGUE -->
+        <div class="page-card" id="page1bis">
+            <h2>Petite mise en garde... 👀</h2>
+            <p>Avant de continuer : ce site va te laisser penser avoir le choix... <strong>Mais en réalité, tu n'as absolument aucun choix ici.</strong> C'est ma dictature d'anniversaire.</p>
+            <button class="btn" onclick="changerPage('page2')">Découvrir la suite 🚀</button>
         </div>
 
         <!-- PAGE 2 : L'INDICE CADEAU JEU VIDÉO -->
@@ -401,10 +406,11 @@
             <button class="btn" id="btnConfirmationFinale" style="margin-top: 30px; display: none;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
         </div>
 
-        <!-- PAGE 5 : MESSAGE FINAL -->
+        <!-- PAGE 5 : MESSAGE FINAL AVEC CONFIRMATION MODIFIÉE -->
         <div class="page-card" id="page5">
-            <h2>✅ C'est validé pour le Vendredi 12 Juin !</h2>
-            <p>Ton créneau est officiellement bloqué : <br><strong id="dateValidee" style="color: #2563eb; font-size: 1.25em;"></strong></p>
+            <h2 style="color: #2563eb;">🎉 Félicitations !</h2>
+            <p style="font-size: 1.25em; font-weight: 700; color: #1e3a8a;">Tu viens officiellement de réserver du temps avec ton goat préféré. 🎉</p>
+            <p>Créneau bloqué : <br><strong id="dateValidee" style="color: #475569;"></strong></p>
             
             <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 30px 0;">
             
@@ -418,7 +424,7 @@
 
     </div>
 
-    <!-- PAGE 6 : SÉQUENCE FINALE GÉANTE - DEGRADÉ BLEU SUBBLIME & ULTRA FLORALE -->
+    <!-- PAGE 6 : SÉQUENCE FINALE GÉANTE -->
     <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="fermerPageFleurs()">
         <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
         <div style="color: white; font-size: 1.2em; opacity: 0.9; margin-top: 20px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">Regarde toutes ces fleurs géantes éclater pour toi ! 😍💙</div>
@@ -429,12 +435,11 @@
         let clicsRestants = 5;
         let intervalleFleurs;
 
-        // Écouteur global pour refermer l'enveloppe si on clique n'importe où ailleurs dans le vide
+        // Écouteur global pour refermer l'enveloppe
         document.addEventListener('click', function(e) {
             const env = document.getElementById('maEnveloppe');
             const wrapper = document.getElementById('wrapperEnveloppe');
             
-            // Si l'enveloppe est affichée, qu'elle est ouverte et qu'on a cliqué en dehors d'elle
             if (wrapper.style.display === 'flex' && env.classList.contains('open') && !env.contains(e.target)) {
                 env.classList.remove('open');
                 document.getElementById('btnConfirmationFinale').style.display = 'none';
@@ -500,17 +505,17 @@
             const boutons = document.getElementById('blocBoutonsIndice');
             const btnSuivant = document.getElementById('btnSuivantIndice');
             const btnRetour = document.getElementById('btnRetourArriere');
-            const texteIntro = document.getElementById('texteIndiceIntro');
+            const textIntro = document.getElementById('texteIndiceIntro');
             
             if(choix === 'oui') {
-                texteIntro.innerText = "🔍 Voici ton indice durement gagné !";
+                textIntro.innerText = "🔍 Voici ton indice durement gagné !";
                 boutons.style.display = 'none';
                 zone.innerHTML = "🔓 CADEAU DÉVERROUILLÉ !<br><br>🔍 INDICE GLOBAL :<br>\"Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫\"";
                 zone.style.display = 'block';
                 btnSuivant.style.display = 'block';
                 btnRetour.style.display = 'block'; 
             } else {
-                texteIntro.innerText = "🚨 T'es obligée de connaître l'indice sinon tu passeras jamais pour le créneau ! 😤 Recommence :";
+                textIntro.innerText = "🚨 T'es obligée de connaître l'indice sinon tu passeras jamais pour le créneau ! 😤 Recommence :";
                 document.getElementById('page2').style.animation = 'none';
                 setTimeout(() => { document.getElementById('page2').style.animation = 'shake 0.4s ease-in-out'; }, 10);
             }
@@ -562,7 +567,7 @@
         }
 
         function clicEnveloppe(event) {
-            event.stopPropagation(); // Évite que le clic sur l'enveloppe elle-même ne la referme aussitôt
+            event.stopPropagation();
             const env = document.getElementById('maEnveloppe');
             
             if(!env.classList.contains('open')) {
@@ -571,7 +576,6 @@
                     document.getElementById('btnConfirmationFinale').style.display = 'block';
                 }, 600);
             } else {
-                // Si elle reclique dessus alors qu'elle est déjà ouverte, elle se referme aussi
                 env.classList.remove('open');
                 document.getElementById('btnConfirmationFinale').style.display = 'none';
             }
@@ -609,7 +613,6 @@
               }
 
               var particleCount = 80 * (timeLeft / duration);
-              // Confettis de fête adaptés au bleu et rose/blanc
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
             }, 200);
@@ -619,7 +622,6 @@
             const typesFleurs = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '💐'];
             const conteneur = document.getElementById('pageFinaleFleurs');
 
-            // Génération accélérée pour un rendu ultra dense et spectaculaire
             intervalleFleurs = setInterval(() => {
                 const fleur = document.createElement('div');
                 fleur.classList.add('fleur-instanciee');
@@ -630,20 +632,19 @@
                 const mx = Math.cos(angle) * distance + "px";
                 const my = Math.sin(angle) * distance + "px";
                 
-                // MULTIPLICATEUR DE TAILLE REHAUSSÉ (Fleurs énormes et hyper imposantes)
-                const size = Math.random() * 4 + 4; // Échelle variant de x4 à x8 !
+                const size = Math.random() * 4 + 4; 
                 const rot = Math.random() * 360 + 360 + "deg";
 
                 fleur.style.setProperty('--mx', mx);
                 fleur.style.setProperty('--my', my);
                 fleur.style.setProperty('--size', size);
                 fleur.style.setProperty('--rot', rot);
-                fleur.style.fontSize = "24px"; // Base plus grande
+                fleur.style.fontSize = "24px";
 
                 conteneur.appendChild(fleur);
 
                 setTimeout(() => { fleur.remove(); }, 6500);
-            }, 100); // S'exécute toutes les 100ms
+            }, 100);
         }
     </script>
 </body>
