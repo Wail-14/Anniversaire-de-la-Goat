@@ -275,9 +275,9 @@
             <select id="choixDate" onchange="verifierDateOption(this)">
                 <option value="" disabled selected>-- Choisis ton créneau --</option>
                 <option value="bloque">Tous les jours de la semaine (Accès VIP) 🔒</option>
-                <option value="Vendredi 12 Juin (Sortie avec le GOAT)">Vendredi 12 Juin (Sortie avec le GOAT) 🍽️</option>
                 <option value="Vendredi 12 Juin (Sortie avec le GOAT)">Vendredi 12 Juin (Sortie avec le GOAT) ☀️</option>
-                <option value="Vendredi 12 Juin (Sortie avec le GOAT)">Vendredi 12 Juin (Sortie avec le GOAT) 🌃</option>
+                <option value="Vendredi 12 Juin (Sortie avec le GOAT)">Vendredi 12 Juin (Sortie avec le GOAT) ☀️</option>
+                <option value="Vendredi 12 Juin (Sortie avec le GOAT)">Vendredi 12 Juin (Sortie avec le GOAT) ☀️</option>
             </select>
 
             <button class="btn" onclick="validerAgenda()">Passer à l'étape suivante 🔒</button>
@@ -316,7 +316,7 @@
             
             <h3>Mon petit mot pour toi 💖</h3>
             <p style="text-align: left; font-size: 1.05em; background: #f8fafc; padding: 20px; border-radius: 16px; border-left: 4px solid #2563eb;">
-                [Écris ton vrai message d'ami ici pour Arige ! Le site est 100% prêt à être partagé.]
+                [J'espère que ce petit cadeau t'aura fait sourire. Parmi toutes les personnes que j'ai eu la chance de rencontrer, tu fais partie de celles qui comptent vraiment. Merci pour tous les souvenirs, les rires et les moments partagés. J'espère que cette journée sera aussi spéciale que toi. Joyeux anniversaire. 💙 .]
             </p>
             
             <button class="btn" style="background: linear-gradient(135deg, #ec4899, #db2777); font-size: 1.2em; padding: 20px;" onclick="declencherExplosionFinale()">🎁 LE CADEAU DE FIN ! 🎁</button>
@@ -438,7 +438,7 @@
             if(parseInt(reponse) === 14) {
                 errBox.style.display = 'none';
                 document.getElementById('blocCalculSecret').style.display = 'none';
-                document.getElementById('consigneActivite').innerHTML = "🎉 <strong>Calcul validé ! Tu es très forte.</strong> Voici les détails :";
+                document.getElementById('consigneActivite').innerHTML = "🎉 <strong>Calcul validé ! Tu es une fast learner.</strong> Voici les détails :";
                 
                 // Affichage des indices cachés
                 document.getElementById('zoneTexteForcee').style.display = 'block';
