@@ -191,11 +191,11 @@
             animation: shake 0.4s ease-in-out;
         }
 
-        /* NYSTÈME ENVELOPPE INTERACTIVE INDICE */
+        /* SYSTÈME ENVELOPPE INTERACTIVE INDICE (TEXTE SÉCURISÉ & CACHÉ) */
         .wrapper-enveloppe {
             display: none;
             justify-content: center;
-            margin: 30px 0;
+            margin: 40px 0;
             perspective: 1000px;
         }
         .enveloppe {
@@ -248,7 +248,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0; /* Totalement invisible au départ */
         }
+        
         /* Classe d'ouverture de l'enveloppe */
         .enveloppe.open::before {
             transform: rotateX(180deg);
@@ -261,14 +263,15 @@
             min-height: 110px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.25);
             border: 2px solid #3b82f6;
+            opacity: 1; /* Devient visible uniquement à l'ouverture */
         }
 
-        /* PAGE SPECIAL FLEURS ET CADRE FINAL */
+        /* PAGE SPECIAL FLEURS ET CADRE FINAL - THÈME DEGRADÉ BLEU FAVORITE */
         .page-fleurs-geantes {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(135deg, #fbcfe8, #f472b6, #db2777, #4c1d95);
+            background: linear-gradient(135deg, #0f172a, #1e3a8a, #2563eb, #1d4ed8, #0284c7);
             z-index: 99999;
             justify-content: center;
             align-items: center;
@@ -281,7 +284,7 @@
             font-size: 3.5em;
             font-weight: 900;
             text-transform: uppercase;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 40px rgba(236,72,153,0.6);
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 40px rgba(59,130,246,0.6);
             z-index: 10;
             padding: 20px;
             animation: pulseFete 1.5s infinite ease-in-out;
@@ -290,16 +293,21 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+        
+        /* FLEURS ENORMES ET TRÈS APPARENTES */
         .fleur-instanciee {
             position: absolute;
             pointer-events: none;
             opacity: 0;
-            animation: animationFleurGeante 6s linear forwards;
+            animation: animationFleurGeante 6.5s linear forwards;
             z-index: 2;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); /* Rend les fleurs ultra voyantes */
+            line-height: 1;
         }
         @keyframes animationFleurGeante {
             0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; top: 50%; left: 50%; }
-            15% { opacity: 0.9; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
             100% { transform: translate(var(--mx), var(--my)) scale(var(--size)) rotate(var(--rot)); opacity: 0; top: 50%; left: 50%; }
         }
 
@@ -383,7 +391,7 @@
 
             <!-- CONTENEUR DE L'ENVELOPPE CACHÉE AU DÉBUT -->
             <div class="wrapper-enveloppe" id="wrapperEnveloppe">
-                <div class="enveloppe" id="maEnveloppe" onclick="ouvrirEnveloppeIndice()">
+                <div class="enveloppe" id="maEnveloppe" onclick="clicEnveloppe(event)">
                     <div class="lettre">
                         "Tu te déplaceras sans vraiment choisir la direction. Si tu veux un autre indice, attends le vendredi 12 juin."
                     </div>
@@ -410,20 +418,31 @@
 
     </div>
 
-    <!-- PAGE 6 : NOUVELLE PAGE PLEIN ÉCRAN ANIMATIONS GÉANTES DE FLEURS -->
-    <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="this.style.display='none'; clearInterval(intervalleFleurs);">
+    <!-- PAGE 6 : SÉQUENCE FINALE GÉANTE - DEGRADÉ BLEU SUBBLIME & ULTRA FLORALE -->
+    <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="fermerPageFleurs()">
         <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
-        <div style="color: white; font-size: 1.1em; opacity: 0.8; margin-top: 20px; z-index: 10; font-weight: 600;">Regarde toutes ces fleurs éclater pour toi ! 😍</div>
-        <button class="btn" style="max-width: 200px; margin-top: 40px; z-index: 10; background: white; color: #db2777;" onclick="window.location.reload()">Recommencer 🔄</button>
+        <div style="color: white; font-size: 1.2em; opacity: 0.9; margin-top: 20px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">Regarde toutes ces fleurs géantes éclater pour toi ! 😍💙</div>
+        <button class="btn" style="max-width: 260px; margin-top: 40px; z-index: 10; background: #ffffff; color: #1e3a8a; font-size: 1.1em; box-shadow: 0 10px 25px rgba(0,0,0,0.3);" onclick="event.stopPropagation(); window.location.reload();">Retour à l'accueil 🏠</button>
     </div>
 
     <script>
         let clicsRestants = 5;
         let intervalleFleurs;
 
+        // Écouteur global pour refermer l'enveloppe si on clique n'importe où ailleurs dans le vide
+        document.addEventListener('click', function(e) {
+            const env = document.getElementById('maEnveloppe');
+            const wrapper = document.getElementById('wrapperEnveloppe');
+            
+            // Si l'enveloppe est affichée, qu'elle est ouverte et qu'on a cliqué en dehors d'elle
+            if (wrapper.style.display === 'flex' && env.classList.contains('open') && !env.contains(e.target)) {
+                env.classList.remove('open');
+                document.getElementById('btnConfirmationFinale').style.display = 'none';
+            }
+        });
+
         function retourZero() {
             retourIndice();
-            // RE-INITIALISATION PARFAITE DE LA PAGE 4 AUSSI !
             document.getElementById('erreurCalcul').style.display = 'none';
             document.getElementById('blocCalculSecret').style.display = 'block';
             document.getElementById('reponseJours').value = '';
@@ -525,7 +544,6 @@
             changerPage('page4');
         }
 
-        // VÉRIFICATION DU CALCUL SECRET (28 MAI AU 11 JUIN = 14 JOURS)
         function verifierCalculAnniv() {
             const reponse = document.getElementById('reponseJours').value;
             const errBox = document.getElementById('erreurCalcul');
@@ -534,9 +552,7 @@
             if(parseInt(reponse) === 14) {
                 errBox.style.display = 'none';
                 document.getElementById('blocCalculSecret').style.display = 'none';
-                document.getElementById('consigneActivite').innerHTML = "🎉 <strong>Calcul validé ! Tu es une fast learner.</strong><br>Clique sur l'enveloppe bleue pour découvrir l'indice :";
-                
-                // On affiche la belle enveloppe
+                document.getElementById('consigneActivite').innerHTML = "🎉 <strong>Calcul validé ! Tu es une fast learner.</strong><br>Clique sur l'enveloppe pour extraire l'indice :";
                 document.getElementById('wrapperEnveloppe').style.display = 'flex';
             } else {
                 errBox.style.display = 'block';
@@ -545,14 +561,19 @@
             }
         }
 
-        function ouvrirEnveloppeIndice() {
+        function clicEnveloppe(event) {
+            event.stopPropagation(); // Évite que le clic sur l'enveloppe elle-même ne la referme aussitôt
             const env = document.getElementById('maEnveloppe');
+            
             if(!env.classList.contains('open')) {
                 env.classList.add('open');
-                // Affiche le bouton final uniquement après l'ouverture
                 setTimeout(() => {
                     document.getElementById('btnConfirmationFinale').style.display = 'block';
                 }, 600);
+            } else {
+                // Si elle reclique dessus alors qu'elle est déjà ouverte, elle se referme aussi
+                env.classList.remove('open');
+                document.getElementById('btnConfirmationFinale').style.display = 'none';
             }
         }
 
@@ -560,18 +581,21 @@
             changerPage('page5');
         }
 
-        // APPARITION DE LA NOUVELLE PAGE AVEC SÉQUENCE DE FLEURS IMMENSES
         function declencherExplosionFinale() {
             document.getElementById('pageFinaleFleurs').style.display = 'flex';
             grossePluieDeFleurs();
             genererFleursGeantes();
         }
 
-        // Pluie de confettis en arrière-plan
+        function fermerPageFleurs() {
+            document.getElementById('pageFinaleFleurs').style.display = 'none';
+            clearInterval(intervalleFleurs);
+        }
+
         function grossePluieDeFleurs() {
-            var duration = 15 * 1000;
+            var duration = 18 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 35, spread: 360, ticks: 80, zIndex: 999999 };
+            var defaults = { startVelocity: 40, spread: 360, ticks: 90, zIndex: 999999 };
 
             function randomInRange(min, max) {
               return Math.random() * (max - min) + min;
@@ -584,41 +608,42 @@
                 return clearInterval(interval);
               }
 
-              var particleCount = 70 * (timeLeft / duration);
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#ec4899', '#ff007f', '#e0aaff', '#ffffff'] }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#ec4899', '#ff007f', '#e0aaff', '#ffffff'] }));
-            }, 250);
+              var particleCount = 80 * (timeLeft / duration);
+              // Confettis de fête adaptés au bleu et rose/blanc
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
+            }, 200);
         }
 
-        // Création dynamique de grosses fleurs volantes sur l'écran
         function genererFleursGeantes() {
-            const typesFleurs = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷'];
+            const typesFleurs = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '💐'];
             const conteneur = document.getElementById('pageFinaleFleurs');
 
+            // Génération accélérée pour un rendu ultra dense et spectaculaire
             intervalleFleurs = setInterval(() => {
                 const fleur = document.createElement('div');
                 fleur.classList.add('fleur-instanciee');
                 fleur.innerText = typesFleurs[Math.floor(Math.random() * typesFleurs.length)];
                 
-                // Définition de variables aléatoires CSS pour l'animation d'explosion depuis le centre
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 400 + 150; // Distance de projection
+                const distance = Math.random() * 500 + 200; 
                 const mx = Math.cos(angle) * distance + "px";
                 const my = Math.sin(angle) * distance + "px";
-                const size = Math.random() * 3 + 2; // Taille géante (x2 à x5)
-                const rot = Math.random() * 360 + 180 + "deg";
+                
+                // MULTIPLICATEUR DE TAILLE REHAUSSÉ (Fleurs énormes et hyper imposantes)
+                const size = Math.random() * 4 + 4; // Échelle variant de x4 à x8 !
+                const rot = Math.random() * 360 + 360 + "deg";
 
                 fleur.style.setProperty('--mx', mx);
                 fleur.style.setProperty('--my', my);
                 fleur.style.setProperty('--size', size);
                 fleur.style.setProperty('--rot', rot);
-                fleur.style.fontSize = "20px";
+                fleur.style.fontSize = "24px"; // Base plus grande
 
                 conteneur.appendChild(fleur);
 
-                // Destruction du DOM après l'animation
-                setTimeout(() => { fleur.remove(); }, 6000);
-            }, 150);
+                setTimeout(() => { fleur.remove(); }, 6500);
+            }, 100); // S'exécute toutes les 100ms
         }
     </script>
 </body>
