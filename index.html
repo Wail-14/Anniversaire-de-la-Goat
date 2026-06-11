@@ -19,12 +19,23 @@
             --blue-pancarte: linear-gradient(135deg, #1e3a8a, #3b82f6);
         }
 
+        /* Verrouillage strict de l'affichage horizontal global */
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-gradient);
             color: var(--text);
             margin: 0;
             padding: 0;
+            width: 100%;
+            max-width: 100%;
             min-height: 100vh;
             min-height: 100dvh; /* Force la stabilité sur les navigateurs mobiles */
             display: flex;
@@ -44,6 +55,8 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            width: 100%;
+            box-sizing: border-box;
         }
         nav .logo {
             font-weight: 800;
@@ -300,7 +313,7 @@
             transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.4s, z-index 0s 0.4s, opacity 0.3s 0.4s;
         }
 
-        /* ZONE PHOTO SOUVENIR CORRIGÉE */
+        /* ZONE PHOTO SOUVENIR */
         .zone-photo-souvenir {
             display: flex;
             justify-content: center;
@@ -391,6 +404,32 @@
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-6px); }
             40%, 80% { transform: translateX(6px); }
+        }
+
+        /* --- CORRECTION ULTRA-IMPORTANTE MOBILE RESPONSIVE --- */
+        @media (max-width: 480px) {
+            nav {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+            nav .logo {
+                font-size: 0.95em;
+                letter-spacing: 0px;
+            }
+            nav .status {
+                font-size: 0.75em;
+                padding: 4px 8px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            nav .logo {
+                font-size: 0.82em;
+            }
+            nav .status {
+                font-size: 0.68em;
+                padding: 3px 6px;
+            }
         }
 
         @media (min-width: 768px) {
