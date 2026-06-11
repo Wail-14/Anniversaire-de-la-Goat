@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Birthday Arige ! 🎉</title>
     <meta property="og:title" content="Happy Birthday Arige ! 🎉💜">
     <meta property="og:description" content="Un petit site secret créé spécialement pour toi...">
@@ -26,10 +26,12 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            min-height: 100dvh; /* Force la stabilité sur les navigateurs mobiles */
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -webkit-overflow-scrolling: touch;
         }
 
         nav {
@@ -73,14 +75,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .page-card {
             background: var(--white);
             max-width: 520px;
             width: 100%;
-            padding: 20px 20px;
+            padding: 24px 20px;
             border-radius: 24px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
             text-align: center;
@@ -92,13 +96,13 @@
         .page-card.active { display: block; }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { color: #1e3a8a; font-size: 1.9em; margin-top: 0; margin-bottom: 15px; font-weight: 800; }
-        h2 { color: #1e3a8a; font-size: 1.5em; font-weight: 700; margin-top: 0; margin-bottom: 10px; }
-        h3 { color: #1e3a8a; font-size: 1.2em; font-weight: 700; margin-top: 0; margin-bottom: 8px; }
+        h1 { color: #1e3a8a; font-size: 1.8em; margin-top: 0; margin-bottom: 15px; font-weight: 800; line-height: 1.2; }
+        h2 { color: #1e3a8a; font-size: 1.4em; font-weight: 700; margin-top: 0; margin-bottom: 10px; line-height: 1.2; }
+        h3 { color: #1e3a8a; font-size: 1.15em; font-weight: 700; margin-top: 0; margin-bottom: 8px; }
         p { font-size: 0.95em; line-height: 1.5; color: #475569; margin-top: 0; margin-bottom: 15px; }
 
         .btn {
@@ -118,7 +122,7 @@
             -webkit-tap-highlight-color: transparent;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.35); }
-         
+          
         .btn-secondary { background: #f1f5f9; color: #475569; box-shadow: none; }
         .btn-secondary:hover { background: #e2e8f0; color: var(--text); }
 
@@ -167,6 +171,8 @@
             box-shadow: 0 15px 30px rgba(30, 58, 138, 0.25);
             display: none;
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-sizing: border-box;
+            word-wrap: break-word;
         }
 
         @keyframes popIn {
@@ -203,18 +209,19 @@
             font-size: 0.9em;
             display: none;
             animation: shake 0.4s ease-in-out;
+            box-sizing: border-box;
         }
 
         /* wrapper enveloppe */
         .wrapper-enveloppe {
             display: none;
             justify-content: center;
-            margin-top: 50px;
-            margin-bottom: 30px;
+            margin-top: 40px;
+            margin-bottom: 20px;
             perspective: 1000px;
             -webkit-perspective: 1000px;
         }
-         
+          
         .enveloppe {
             position: relative;
             width: 180px;
@@ -228,7 +235,7 @@
             transform-style: preserve-3d;
         }
         .enveloppe:hover { transform: translateY(-5px); }
-         
+          
         /* Rabat supérieur */
         .enveloppe::before {
             content: '';
@@ -241,7 +248,7 @@
             transition: transform 0.4s ease-in-out 0.4s, z-index 0s 0.4s;
             z-index: 4;
         }
-         
+          
         /* Face avant */
         .enveloppe::after {
             content: '';
@@ -253,7 +260,7 @@
             border-radius: 0 0 12px 12px;
             z-index: 3;
         }
-         
+          
         /* Lettre intérieure */
         .lettre {
             position: absolute;
@@ -261,7 +268,7 @@
             width: 160px; height: 100px;
             background: #ffffff;
             border-radius: 8px;
-            padding: 10px;
+            padding: 12px;
             box-sizing: border-box;
             font-size: 0.75em;
             font-weight: 700;
@@ -275,15 +282,15 @@
             justify-content: center;
             opacity: 0;
         }
-         
+          
         .enveloppe.open::before {
             transform: rotateX(180deg);
             z-index: 1;
             transition: transform 0.4s ease-in-out 0s, z-index 0s 0s;
         }
-         
+          
         .enveloppe.open .lettre {
-            transform: translateY(-105px) scale(1.3);
+            transform: translateY(-105px) scale(1.25);
             z-index: 5;
             height: auto;
             min-height: 100px;
@@ -305,11 +312,12 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.1);
             border: 3px solid #ffffff;
             background: #e2e8f0;
+            box-sizing: border-box;
         }
         .zone-photo-souvenir img {
             max-width: 100%;
             height: auto;
-            max-height: 240px; /* Conserve la taille réduite */
+            max-height: 220px;
             display: block;
             object-fit: cover;
         }
@@ -319,6 +327,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
+            height: 100dvh;
             background: linear-gradient(135deg, #0f172a, #1e3a8a, #2563eb, #1d4ed8, #0284c7);
             z-index: 99999;
             justify-content: center;
@@ -331,18 +340,19 @@
         }
         .titre-floral-geant {
             color: white;
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: 900;
             text-transform: uppercase;
             text-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 40px rgba(59,130,246,0.6);
             z-index: 10;
             padding: 10px;
             animation: pulseFete 1.5s infinite ease-in-out;
+            line-height: 1.3;
         }
-         
+          
         .texte-retardataire {
             color: #e0f2fe;
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 600;
             margin-top: 20px;
             z-index: 10;
@@ -360,7 +370,7 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.03); }
         }
-         
+          
         .fleur-instanciee {
             position: absolute;
             pointer-events: none;
@@ -392,6 +402,7 @@
             .titre-floral-geant { font-size: 3.5em; }
             .texte-retardataire { font-size: 1.6em; }
             .page-card { padding: 30px; }
+            .zone-photo-souvenir img { max-height: 240px; }
         }
     </style>
 </head>
@@ -404,21 +415,18 @@
 
     <div class="main-container">
 
-        <!-- PAGE 1 : INTRODUCTION -->
         <div class="page-card active" id="page1">
             <h1>Bienvenue Arige ! 🥳💜</h1>
             <p>Aujourd'hui c'est ton jour, alors j'ai voulu te préparer quelque chose d'un peu différent. Rien d'incroyable, juste un petit site fait spécialement pour toi.</p>
             <button class="btn" onclick="changerPage('page1bis')">Suivant ➡️</button>
         </div>
 
-        <!-- PAGE 1 BIS : DISCLAIMER BLAGUE -->
         <div class="page-card" id="page1bis">
             <h2>Petite mise en garde... 👀</h2>
             <p>ps : ce site va te laisser penser avoir le choix... <strong>Mais en réalité, tu n'as absolument aucun choix ici.</strong> C'est ma dictature d'anniversaire.</p>
             <button class="btn" onclick="changerPage('page2')">Découvrir la suite 🚀</button>
         </div>
 
-        <!-- PAGE 2 : L'INDICE CADEAU -->
         <div class="page-card" id="page2">
             <h2>🎁 Découvrir mon cadeau</h2>
             <p id="texteIndiceIntro">Je sais que tu as envie de savoir ce que c'est. Tu veux un indice assez important maintenant ou tu préfères sagement garder la surprise ? 🤔</p>
@@ -428,21 +436,18 @@
                 <button class="btn btn-secondary" onclick="montrerIndice('non')">Je préfère garder la surprise 😇</button>
             </div>
 
-            <!-- MINI JEU -->
             <div id="containerSpamCadeau">
                 <p style="font-weight: 700; color: #1e3a8a; margin-bottom: 10px;">SPAME LE CADEAU POUR L'OUVRIR ! 🔨</p>
                 <div id="cadeauAFracasser" onclick="clickSpamCadeau()">🎁</div>
                 <div id="compteurClics" style="margin-top: 10px; font-weight: 800; color: #ef4444;">Encore 5 clics...</div>
             </div>
 
-            <!-- PANCARTE INDICE -->
             <div class="box-pancarte-bleue" id="zoneIndice"></div>
              
             <button class="btn" id="btnSuivantIndice" style="display:none; margin-top: 25px; background: #0f172a;" onclick="changerPage('page3')">Passer à la suite ✨</button>
             <button class="btn btn-secondary" id="btnRetourArriere" style="display:none; margin-top: 10px;" onclick="retourIndice()">⬅️ Retourner en arrière</button>
         </div>
 
-        <!-- PAGE 3 : L'AGENDA -->
         <div class="page-card" id="page3">
             <h2>📅 Réserve ton moment !</h2>
             <p>Pour fêter ça dignement, choisis ton créneau. (Rappel : tu n'as pas le choix) 😉</p>
@@ -460,7 +465,6 @@
             <button class="btn" onclick="validerAgenda()">Passer à l'étape suivante 🔒</button>
         </div>
 
-        <!-- PAGE 4 : ENIGME CALCUL -->
         <div class="page-card" id="page4">
             <h2>🎈 Un indice sur l'activité du Vendredi...</h2>
             <p id="consigneActivite">Pour déverrouiller l'indice de l'activité, réponds à cette question secrète : <br><br><strong>Combien de jours séparent l'anniversaire du GOAT et ton anniversaire ? 🤔</strong></p>
@@ -472,7 +476,6 @@
                 <button class="btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="verifierCalculAnniv()">Valider ma réponse 🧭</button>
             </div>
 
-            <!-- ENVELOPPE INTERACTIVE DEUX TEMPS SYNCHRONISÉE -->
             <div class="wrapper-enveloppe" id="wrapperEnveloppe">
                 <div class="enveloppe" id="maEnveloppe" onclick="clicEnveloppe(event)">
                     <div class="lettre">
@@ -484,20 +487,18 @@
             <button class="btn" id="btnConfirmationFinale" style="margin-top: 30px; display: none;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
         </div>
 
-        <!-- PAGE 5 : MESSAGE FINAL ET PHOTO REDESSINÉE -->
         <div class="page-card" id="page5">
             <h2 style="color: #2563eb; margin-bottom: 5px;">🎉 Félicitations !</h2>
             <p style="font-size: 1.05em; font-weight: 700; color: #1e3a8a; margin-bottom: 5px;">Tu viens officiellement de réserver du temps avec ton goat préféré. 🎉</p>
             <p style="margin-bottom: 10px;">Créneau bloqué : <strong>Vendredi 12 Juin (Sortie avec le GOAT)</strong></p>
              
-            <!-- NOM RESTAURÉ EN image_582659.png -->
             <div class="zone-photo-souvenir">
                 <img src="image_582659.png" alt="Notre souvenir ensemble 💜">
             </div>
              
             <h3 style="margin-top: 10px; margin-bottom: 5px;">Mon petit mot pour toi 💖</h3>
-            <p style="text-align: left; font-size: 0.9em; background: #f8fafc; padding: 12px 16px; border-radius: 16px; border-left: 4px solid #2563eb; margin-bottom: 15px;">
-                J'espère que ce petit cadeau t'aura fait sourire. je sais pertinemment à quel  quel point il est difficile d'obtenir un peu de place dans ton planning ces derniers temps. Je sais aussi que la vie est pas toujours facile pour toi, Mais je tenais a te remercier pour tous les souvenirs, les rires et les moments partagés. J'espère que cette journée sera aussi spéciale que toi. Joyeux anniversaire 💙.
+            <p style="text-align: left; font-size: 0.9em; background: #f8fafc; padding: 12px 16px; border-radius: 16px; border-left: 4px solid #2563eb; margin-bottom: 15px; box-sizing: border-box;">
+                J'espère que ce petit cadeau t'aura fait sourire. je sais pertinemment à quel quel point il est difficile d'obtenir un peu de place dans ton planning ces derniers temps. Je sais aussi que la vie est pas toujours facile pour toi, Mais je tenais a te remercier pour tous les souvenirs, les rires et les moments partagés. J'espère que cette journée sera aussi spéciale que toi. Joyeux anniversaire 💙.
             </p>
              
             <button class="btn" style="background: linear-gradient(135deg, #ec4899, #db2777); font-size: 1em; padding: 14px; margin-bottom: 0;" onclick="declencherExplosionFinale()">🎁 LE CADEAU DE FIN ! 🎁</button>
@@ -505,7 +506,6 @@
 
     </div>
 
-    <!-- PAGE 6 : SUPER EXPLOSION DE FLEURS -->
     <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="fermerPageFleurs()">
         <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
         <div style="color: white; font-size: 1.1em; opacity: 0.9; margin-top: 15px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0 10px;">Regarde toutes ces fleurs géantes éclater pour toi ! 🌹</div>
