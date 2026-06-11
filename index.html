@@ -12,6 +12,7 @@
             --primary: #2563eb;
             --white: #ffffff;
             --text: #0f172a;
+            --blue-pancarte: linear-gradient(135deg, #1e3a8a, #3b82f6);
         }
 
         body {
@@ -129,16 +130,44 @@
             background-size: 16px;
         }
 
-        .box-indice {
-            background: #f0fdf4;
-            border: 2px dashed #22c55e;
-            padding: 24px;
-            border-radius: 18px;
-            margin-top: 10px;
+        /* ZONE INDICE JEU VIDÉO ET DEGRADÉ BLEU */
+        .box-pancarte-bleue {
+            background: var(--blue-pancarte);
+            border: 3px solid #1e40af;
+            padding: 26px;
+            border-radius: 20px;
+            margin-top: 15px;
             font-weight: 600;
-            color: #166534;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 30px rgba(30, 58, 138, 0.25);
             display: none;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* SYSTÈME DE SPAM DE CADEAU */
+        #containerSpamCadeau {
+            display: none;
+            margin: 20px 0;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        #cadeauAFracasser {
+            font-size: 4.5em;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.1s ease;
+            user-select: none;
+        }
+        #cadeauAFracasser:active { transform: scale(0.9); }
 
         .box-erreur {
             background: #fef2f2;
@@ -152,10 +181,12 @@
             animation: shake 0.4s ease-in-out;
         }
 
+        .shake-effect { animation: shake 0.2s ease-in-out infinite; }
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
     </style>
 </head>
@@ -175,24 +206,32 @@
             <button class="btn" onclick="changerPage('page2')">Suivant ➡️</button>
         </div>
 
-        <!-- PAGE 2 : L'INDICE CADEAU -->
+        <!-- PAGE 2 : L'INDICE CADEAU JEU VIDÉO -->
         <div class="page-card" id="page2">
             <h2>🎁 Découvrir mon cadeau</h2>
             <p id="texteIndiceIntro">Je sais que tu meurs d'envie de savoir ce que c'est. Tu veux un indice exclusif maintenant ou tu préfères sagement garder la surprise ? 🤔</p>
             
             <div id="blocBoutonsIndice">
-                <button class="btn" onclick="montrerIndice('oui')">Je veux l'indice immédiatement ! 😍</button>
+                <button class="btn" onclick="ouvrirMiniJeuCadeau()">Je veux l'indice immédiatement ! 😍</button>
                 <button class="btn btn-secondary" onclick="montrerIndice('non')">Je préfère garder la surprise 😇</button>
             </div>
 
-            <div class="box-indice" id="zoneIndice"></div>
+            <!-- LE MINI JEU DU CADEAU À SPAMER -->
+            <div id="containerSpamCadeau">
+                <p style="font-weight: 700; color: #1e3a8a; margin-bottom: 10px;">SPAME LE CADEAU POUR L'OUVRIR ! 🔨</p>
+                <div id="cadeauAFracasser" onclick="clickSpamCadeau()">🎁</div>
+                <div id="compteurClics" style="margin-top: 10px; font-weight: 800; color: #ef4444;">Encore 5 clics...</div>
+            </div>
+
+            <!-- LA PANCARTE DEGRADÉ BLEU -->
+            <div class="box-pancarte-bleue" id="zoneIndice"></div>
             
-            <!-- BOUTONS DE NAVIGATION CORRECTEMENT ORDONNÉS -->
+            <!-- BOUTONS DE NAVIGATION -->
             <button class="btn" id="btnSuivantIndice" style="display:none; margin-top: 25px; background: #0f172a;" onclick="changerPage('page3')">Passer à la suite ✨</button>
             <button class="btn btn-secondary" id="btnRetourArriere" style="display:none; margin-top: 10px;" onclick="retourIndice()">⬅️ Retourner en arrière</button>
         </div>
 
-        <!-- PAGE 3 : L'AGENDA (CRÉNEAUX NETTOYÉS) -->
+        <!-- PAGE 3 : L'AGENDA -->
         <div class="page-card" id="page3">
             <h2>📅 Réserve ton moment !</h2>
             <p>Pour fêter ça dignement, choisis ton créneau. (Rappel : tu n'as pas le choix) 😉</p>
@@ -210,19 +249,28 @@
             <button class="btn" onclick="validerAgenda()">Passer à l'étape suivante 🔒</button>
         </div>
 
-        <!-- PAGE 4 : INDICE ACTIVITÉ COMPLÈTEMENT FAUSSÉ -->
+        <!-- PAGE 4 : ENIGME ACTIVITÉ AVANT INDICE -->
         <div class="page-card" id="page4">
             <h2>🎈 Un indice sur l'activité du Vendredi...</h2>
-            <p>Puisque le rendez-vous est pris pour le Vendredi 12 Juin, voici un indice sur ce qu'on va faire. Essaie de deviner si tu es forte...</p>
+            <p>Puisque le rendez-vous est pris pour le Vendredi 12 Juin, décrypte d'abord la boussole pour afficher l'indice de l'activité...</p>
             
-            <div class="box-indice" style="display:block; background: #fef3c7; border-color: #f59e0b; color: #78350f;">
+            <!-- BOUTON D'ACTION OBLIGATOIRE -->
+            <button class="btn" id="btnDeclencheActivite" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="debloquerIndiceActivite()">Tenter de boussoler l'activité 🧭</button>
+
+            <!-- ZONE TEXTE FORCEE -->
+            <div id="zoneTexteForcee" style="display: none; background: #fef3c7; border: 2px solid #f59e0b; color: #78350f; padding: 20px; border-radius: 16px; margin-top: 15px; font-weight: 700; line-height: 1.5;">
+                "Tu te déplaceras sans vraiment choisir la direction. Si tu veux un autre indice, attends le vendredi 12 juin."
+            </div>
+
+            <!-- ENIGME FLOU CACHÉE AU DÉBUT -->
+            <div class="box-pancarte-bleue" id="zoneIndiceActivite" style="margin-top: 20px; background: #f8fafc; border-color: #cbd5e1; color: #475569; text-shadow: none;">
                 "C'est une activité mystère où on va surtout partager un moment posé, un truc super chill pour couper du quotidien. Ramène juste ton sourire et ta bonne humeur, pas besoin de tenue d'astronaute, on reste dans le classique mais en mieux ! 🤫✨"
             </div>
             
-            <button class="btn" style="margin-top: 30px;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
+            <button class="btn" id="btnConfirmationFinale" style="margin-top: 30px; display: none;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
         </div>
 
-        <!-- PAGE 5 : MESSAGE FINAL AVEC EXPLOSION CONTINUE -->
+        <!-- PAGE 5 : MESSAGE FINAL -->
         <div class="page-card" id="page5">
             <h2>✅ C'est validé pour le Vendredi 12 Juin !</h2>
             <p>Ton créneau est officiellement bloqué : <br><strong id="dateValidee" style="color: #2563eb; font-size: 1.25em;"></strong></p>
@@ -240,18 +288,22 @@
     </div>
 
     <script>
-        // Reset complet si clic sur le logo de la barre de navigation
+        let clicsRestants = 5;
+
         function retourZero() {
             retourIndice();
             changerPage('page1');
         }
 
-        // Le bouton retour de la page 2 réinitialise l'état de la page 2 elle-même
         function retourIndice() {
+            clicsRestants = 5;
             document.getElementById('blocBoutonsIndice').style.display = 'block';
+            document.getElementById('containerSpamCadeau').style.display = 'none';
             document.getElementById('zoneIndice').style.display = 'none';
             document.getElementById('btnSuivantIndice').style.display = 'none';
             document.getElementById('btnRetourArriere').style.display = 'none';
+            document.getElementById('cadeauAFracasser').innerText = "🎁";
+            document.getElementById('compteurClics').innerText = "Encore 5 clics...";
             document.getElementById('texteIndiceIntro').innerText = "Je sais que tu meurs d'envie de savoir ce que c'est. Tu veux un indice exclusif maintenant ou tu préfères sagement garder la surprise ? 🤔";
             document.getElementById('choixDate').selectedIndex = 0;
             document.getElementById('erreurHlel').style.display = 'none';
@@ -263,6 +315,29 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // ÉTAPE DE SPAM DU CADEAU
+        function ouvrirMiniJeuCadeau() {
+            document.getElementById('blocBoutonsIndice').style.display = 'none';
+            document.getElementById('containerSpamCadeau').style.display = 'block';
+        }
+
+        function clickSpamCadeau() {
+            const cadeau = document.getElementById('cadeauAFracasser');
+            clicsRestants--;
+            
+            // Animation secousse jeu vidéo
+            cadeau.style.transform = "scale(1.2) rotate(10deg)";
+            setTimeout(() => { cadeau.style.transform = "scale(1) rotate(0deg)"; }, 80);
+
+            if(clicsRestants > 0) {
+                document.getElementById('compteurClics').innerText = `Encore ${clicsRestants} clics...`;
+            } else {
+                // Ouverture finale du cadeau !
+                document.getElementById('containerSpamCadeau').style.display = 'none';
+                montrerIndice('oui');
+            }
+        }
+
         function montrerIndice(choix) {
             const zone = document.getElementById('zoneIndice');
             const boutons = document.getElementById('blocBoutonsIndice');
@@ -272,8 +347,7 @@
             
             if(choix === 'oui') {
                 boutons.style.display = 'none';
-                zone.innerText = "🔍 INDICE GLOBAL :\n\"Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫\"";
-                zone.style.borderColor = "#22c55e"; zone.style.background = "#f0fdf4"; zone.style.color = "#166534";
+                zone.innerHTML = "🔓 CADEAU DÉVERROUILLÉ !<br><br>🔍 INDICE GLOBAL :<br>\"Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫\"";
                 zone.style.display = 'block';
                 btnSuivant.style.display = 'block';
                 btnRetour.style.display = 'block'; 
@@ -312,32 +386,42 @@
             changerPage('page4');
         }
 
+        // ACTIONS DE LA PAGE 4
+        function debloquerIndiceActivite() {
+            document.getElementById('btnDeclencheActivite').style.display = 'none';
+            document.getElementById('zoneTexteForcee').style.display = 'block';
+            document.getElementById('zoneIndiceActivite').style.display = 'block';
+            document.getElementById('btnConfirmationFinale').style.display = 'block';
+        }
+
         function finaliserReservation() {
             changerPage('page5');
             grossePluieDeFleurs();
         }
 
+        // SYSTÈME DE FESTIVITÉS TOTALEMENT SÉCURISÉ ET FIABLE
         function grossePluieDeFleurs() {
-            var duration = 6 * 1000; 
-            var end = Date.now() + duration;
-            var scalar = 2.5;
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 25, spread: 360, ticks: 50, zIndex: 999 };
 
-            // Chargement dynamique et sécurisé des glyphes de fleurs pour canvas-confetti
-            var f1 = confetti.shapeFromText({ text: '🌸', scalar });
-            var f2 = confetti.shapeFromText({ text: '🌹', scalar });
-            var f3 = confetti.shapeFromText({ text: '🌷', scalar });
-            var f4 = confetti.shapeFromText({ text: '🌻', scalar });
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
 
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 65, origin: { x: 0, y: 0.7 }, shapes: [f1, f2, f3, f4], scalar });
-                confetti({ particleCount: 3, angle: 120, spread: 65, origin: { x: 1, y: 0.7 }, shapes: [f1, f2, f3, f4], scalar });
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
 
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 40 * (timeLeft / duration);
+              // Éclats magiques multicolores vibrants (rose, fuchsia, blanc, or)
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#ff007f', '#ff66cc', '#e0aaff', '#ffffff'] }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#ff007f', '#ff66cc', '#e0aaff', '#ffffff'] }));
+            }, 250);
         }
     </script>
 </body>
 </html>
-
