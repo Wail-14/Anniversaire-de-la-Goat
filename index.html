@@ -25,12 +25,13 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         nav {
             background: var(--nav-gradient);
             box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3);
-            padding: 15px 30px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,7 +41,7 @@
         }
         nav .logo {
             font-weight: 800;
-            font-size: 1.3em;
+            font-size: 1.1em;
             color: var(--white);
             letter-spacing: 0.5px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -54,11 +55,13 @@
             background: rgba(255, 255, 255, 0.15);
             color: var(--white);
             backdrop-filter: blur(5px);
-            padding: 6px 14px;
+            -webkit-backdrop-filter: blur(5px);
+            padding: 6px 12px;
             border-radius: 30px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: 600;
             border: 1px solid rgba(255, 255, 255, 0.25);
+            white-space: nowrap;
         }
 
         .main-container {
@@ -66,18 +69,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 30px 20px;
+            padding: 20px 15px;
         }
 
         .page-card {
             background: var(--white);
             max-width: 550px;
             width: 100%;
-            padding: 40px;
-            border-radius: 28px;
+            padding: 30px 20px;
+            border-radius: 24px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
             text-align: center;
             display: none;
+            box-sizing: border-box;
             animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -88,16 +92,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { color: #1e3a8a; font-size: 2.4em; margin-top: 0; margin-bottom: 20px; font-weight: 800; }
-        h2 { color: #1e3a8a; font-size: 1.9em; font-weight: 700; margin-top: 0; }
-        p { font-size: 1.1em; line-height: 1.6; color: #475569; margin-bottom: 30px; }
+        h1 { color: #1e3a8a; font-size: 2em; margin-top: 0; margin-bottom: 20px; font-weight: 800; }
+        h2 { color: #1e3a8a; font-size: 1.6em; font-weight: 700; margin-top: 0; }
+        p { font-size: 1em; line-height: 1.6; color: #475569; margin-bottom: 25px; }
 
         .btn {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: var(--white);
             border: none;
-            padding: 16px 32px;
-            font-size: 1.05em;
+            padding: 16px 24px;
+            font-size: 1em;
             font-weight: 600;
             border-radius: 16px;
             cursor: pointer;
@@ -106,6 +110,7 @@
             width: 100%;
             box-sizing: border-box;
             margin-bottom: 12px;
+            -webkit-tap-highlight-color: transparent;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 20px rgba(37, 99, 235, 0.35); }
         
@@ -115,15 +120,16 @@
         select {
             width: 100%;
             padding: 16px;
-            font-size: 1.1em;
+            font-size: 1em;
             border: 2px solid #e2e8f0;
             border-radius: 16px;
             background-color: #f8fafc;
             color: var(--text);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             outline: none;
             cursor: pointer;
             appearance: none;
+            -webkit-appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 16px center;
@@ -133,7 +139,7 @@
         input[type="number"] {
             width: 100%;
             padding: 16px;
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 700;
             text-align: center;
             border: 2px solid #cbd5e1;
@@ -141,12 +147,13 @@
             margin-bottom: 20px;
             outline: none;
             box-sizing: border-box;
+            -webkit-appearance: none;
         }
 
         .box-pancarte-bleue {
             background: var(--blue-pancarte);
             border: 3px solid #1e40af;
-            padding: 26px;
+            padding: 20px;
             border-radius: 20px;
             margin-top: 15px;
             font-weight: 600;
@@ -172,31 +179,35 @@
         }
 
         #cadeauAFracasser {
-            font-size: 4.5em;
+            font-size: 4em;
             cursor: pointer;
             display: inline-block;
             transition: transform 0.1s ease;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         .box-erreur {
             background: #fef2f2;
             border: 2px solid #ef4444;
             color: #991b1b;
-            padding: 18px;
+            padding: 16px;
             border-radius: 16px;
             margin-bottom: 20px;
             font-weight: 600;
+            font-size: 0.95em;
             display: none;
             animation: shake 0.4s ease-in-out;
         }
 
-        /* SYSTÈME ENVELOPPE INTERACTIVE INDICE */
+        /* CORRECTION CORPS ET RABAT DE L'ENVELOPPE */
         .wrapper-enveloppe {
             display: none;
             justify-content: center;
-            margin: 40px 0;
+            margin-top: 40px;
+            margin-bottom: 40px;
             perspective: 1000px;
+            -webkit-perspective: 1000px;
         }
         .enveloppe {
             position: relative;
@@ -207,18 +218,22 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             cursor: pointer;
             transition: transform 0.3s;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
         }
         .enveloppe:hover { transform: translateY(-5px); }
+        
+        /* CORRECTION : Le rabat pointe désormais vers le BAS par défaut quand il est fermé */
         .enveloppe::before {
             content: '';
             position: absolute;
-            top: -100px; left: 0;
+            top: 0; left: 0;
             border-left: 100px solid transparent;
             border-right: 100px solid transparent;
-            border-bottom: 100px solid #3b82f6;
-            transform-origin: bottom;
-            transition: transform 0.4s 0.2s;
-            z-index: 3;
+            border-top: 75px solid #3b82f6; /* Pointé vers le bas */
+            transform-origin: top;
+            transition: transform 0.4s ease 0.1s, z-index 0s 0.2s;
+            z-index: 4;
         }
         .enveloppe::after {
             content: '';
@@ -228,7 +243,7 @@
             border-right: 100px solid #1d4ed8;
             border-top: 70px solid transparent;
             border-radius: 0 0 12px 12px;
-            z-index: 4;
+            z-index: 3;
         }
         .lettre {
             position: absolute;
@@ -238,11 +253,11 @@
             border-radius: 8px;
             padding: 12px;
             box-sizing: border-box;
-            font-size: 0.75em;
+            font-size: 0.8em;
             font-weight: 700;
             color: #1e3a8a;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.5s, z-index 0s 0.2s;
+            transition: transform 0.4s ease, z-index 0s 0.2s, opacity 0.3s;
             z-index: 2;
             overflow: hidden;
             display: flex;
@@ -251,12 +266,13 @@
             opacity: 0;
         }
         
+        /* COMPORTEMENT OUVERTURE */
         .enveloppe.open::before {
-            transform: rotateX(180deg);
+            transform: rotateX(180deg) translateY(75px); /* Se déplie vers le haut */
             z-index: 1;
         }
         .enveloppe.open .lettre {
-            transform: translateY(-90px) scale(1.3);
+            transform: translateY(-90px) scale(1.25);
             z-index: 5;
             height: auto;
             min-height: 110px;
@@ -265,7 +281,24 @@
             opacity: 1;
         }
 
-        /* PAGE SPECIAL FLEURS ET CADRE FINAL */
+        /* SECTION PHOTO SOUVENIR PERSONNELLE */
+        .zone-photo-souvenir {
+            width: 100%;
+            margin: 25px 0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 4px solid #ffffff;
+            background: #e2e8f0;
+        }
+        .zone-photo-souvenir img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* PAGE FINALE FLEURS ET CADRE FINAL */
         .page-fleurs-geantes {
             display: none;
             position: fixed;
@@ -277,23 +310,25 @@
             flex-direction: column;
             overflow: hidden;
             text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .titre-floral-geant {
             color: white;
-            font-size: 3.5em;
+            font-size: 2em;
             font-weight: 900;
             text-transform: uppercase;
             text-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 40px rgba(59,130,246,0.6);
             z-index: 10;
-            padding: 20px;
+            padding: 10px;
             animation: pulseFete 1.5s infinite ease-in-out;
         }
         
         .texte-retardataire {
             color: #e0f2fe;
-            font-size: 1.6em;
+            font-size: 1.3em;
             font-weight: 600;
-            margin-top: 15px;
+            margin-top: 20px;
             z-index: 10;
             text-shadow: 0 4px 12px rgba(0,0,0,0.4);
             opacity: 0;
@@ -307,7 +342,7 @@
 
         @keyframes pulseFete {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
         }
         
         .fleur-instanciee {
@@ -331,6 +366,18 @@
             20%, 60% { transform: translateX(-6px); }
             40%, 80% { transform: translateX(6px); }
         }
+
+        /* MEDIA QUERIES RESPONSIVE PC / SMARTPHONES */
+        @media (min-width: 768px) {
+            h1 { font-size: 2.4em; }
+            h2 { font-size: 1.9em; }
+            p { font-size: 1.1em; }
+            nav .logo { font-size: 1.3em; }
+            nav .status { font-size: 0.85em; }
+            .titre-floral-geant { font-size: 3.5em; }
+            .texte-retardataire { font-size: 1.6em; }
+            .page-card { padding: 40px; }
+        }
     </style>
 </head>
 <body>
@@ -342,7 +389,7 @@
 
     <div class="main-container">
 
-        <!-- PAGE 1 : INTRODUCTION DOUCE -->
+        <!-- PAGE 1 : INTRODUCTION -->
         <div class="page-card active" id="page1">
             <h1>Bienvenue Arige ! 🥳💜</h1>
             <p>Aujourd'hui c'est ton jour, alors j'ai voulu te préparer quelque chose d'un peu différent. Rien d'incroyable, juste un petit site fait spécialement pour toi.</p>
@@ -356,7 +403,7 @@
             <button class="btn" onclick="changerPage('page2')">Découvrir la suite 🚀</button>
         </div>
 
-        <!-- PAGE 2 : L'INDICE CADEAU JEU VIDÉO -->
+        <!-- PAGE 2 : L'INDICE CADEAU -->
         <div class="page-card" id="page2">
             <h2>🎁 Découvrir mon cadeau</h2>
             <p id="texteIndiceIntro">Je sais que tu meurs d'envie de savoir ce que c'est. Tu veux un indice exclusif maintenant ou tu préfères sagement garder la surprise ? 🤔</p>
@@ -366,17 +413,16 @@
                 <button class="btn btn-secondary" onclick="montrerIndice('non')">Je préfère garder la surprise 😇</button>
             </div>
 
-            <!-- LE MINI JEU DU CADEAU À SPAMER -->
+            <!-- MINI JEU -->
             <div id="containerSpamCadeau">
                 <p style="font-weight: 700; color: #1e3a8a; margin-bottom: 10px;">SPAME LE CADEAU POUR L'OUVRIR ! 🔨</p>
                 <div id="cadeauAFracasser" onclick="clickSpamCadeau()">🎁</div>
                 <div id="compteurClics" style="margin-top: 10px; font-weight: 800; color: #ef4444;">Encore 5 clics...</div>
             </div>
 
-            <!-- LA PANCARTE DEGRADÉ BLEU -->
+            <!-- PANCARTE INDICE -->
             <div class="box-pancarte-bleue" id="zoneIndice"></div>
             
-            <!-- BOUTONS DE NAVIGATION -->
             <button class="btn" id="btnSuivantIndice" style="display:none; margin-top: 25px; background: #0f172a;" onclick="changerPage('page3')">Passer à la suite ✨</button>
             <button class="btn btn-secondary" id="btnRetourArriere" style="display:none; margin-top: 10px;" onclick="retourIndice()">⬅️ Retourner en arrière</button>
         </div>
@@ -399,7 +445,7 @@
             <button class="btn" onclick="validerAgenda()">Passer à l'étape suivante 🔒</button>
         </div>
 
-        <!-- PAGE 4 : ENIGME CALCUL SUR LES ANNIVERSAIRES -->
+        <!-- PAGE 4 : ENIGME CALCUL -->
         <div class="page-card" id="page4">
             <h2>🎈 Un indice sur l'activité du Vendredi...</h2>
             <p id="consigneActivite">Pour déverrouiller l'indice de l'activité, réponds à cette question secrète : <br><br><strong>Combien de jours séparent l'anniversaire du GOAT (28 mai) et ton anniversaire (11 juin) ? 🤔</strong></p>
@@ -411,7 +457,7 @@
                 <button class="btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="verifierCalculAnniv()">Valider ma réponse 🧭</button>
             </div>
 
-            <!-- CONTENEUR DE L'ENVELOPPE CACHÉE AU DÉBUT -->
+            <!-- ENVELOPPE INTERACTIVE RÉPARÉE -->
             <div class="wrapper-enveloppe" id="wrapperEnveloppe">
                 <div class="enveloppe" id="maEnveloppe" onclick="clicEnveloppe(event)">
                     <div class="lettre">
@@ -423,45 +469,50 @@
             <button class="btn" id="btnConfirmationFinale" style="margin-top: 30px; display: none;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
         </div>
 
-        <!-- PAGE 5 : MESSAGE FINAL AVEC CONFIRMATION MODIFIÉE -->
+        <!-- PAGE 5 : MESSAGE FINAL ET PHOTO -->
         <div class="page-card" id="page5">
             <h2 style="color: #2563eb;">🎉 Félicitations !</h2>
-            <p style="font-size: 1.25em; font-weight: 700; color: #1e3a8a;">Tu viens officiellement de réserver du temps avec ton goat préféré. 🎉</p>
+            <p style="font-size: 1.15em; font-weight: 700; color: #1e3a8a;">Tu viens officiellement de réserver du temps avec ton goat préféré. 🎉</p>
             <p>Créneau bloqué : <br><strong id="dateValidee" style="color: #475569;"></strong></p>
             
-            <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 30px 0;">
+            <!-- AJOUT DE TA PHOTO SOUVENIR ICI -->
+            <div class="zone-photo-souvenir">
+                <!-- Remplace simplement image_582659.png par le vrai lien ou nom de ta photo à l'avenir -->
+                <img src="image_582659.png" alt="Notre souvenir ensemble 💜">
+            </div>
+            
+            <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 25px 0;">
             
             <h3>Mon petit mot pour toi 💖</h3>
-            <p style="text-align: left; font-size: 1.05em; background: #f8fafc; padding: 20px; border-radius: 16px; border-left: 4px solid #2563eb;">
+            <p style="text-align: left; font-size: 1em; background: #f8fafc; padding: 20px; border-radius: 16px; border-left: 4px solid #2563eb; margin-bottom: 25px;">
                 J'espère que ce petit cadeau t'aura fait sourire. Parmi toutes les personnes que j'ai eu la chance de rencontrer, tu fais partie de celles qui comptent vraiment. Merci pour tous les souvenirs, les rires et les moments partagés. J'espère que cette journée sera aussi spéciale que toi. Joyeux anniversaire. 💙 .
             </p>
             
-            <button class="btn" style="background: linear-gradient(135deg, #ec4899, #db2777); font-size: 1.2em; padding: 20px;" onclick="declencherExplosionFinale()">🎁 LE CADEAU DE FIN ! 🎁</button>
+            <button class="btn" style="background: linear-gradient(135deg, #ec4899, #db2777); font-size: 1.1em; padding: 18px;" onclick="declencherExplosionFinale()">🎁 LE CADEAU DE FIN ! 🎁</button>
         </div>
 
     </div>
 
-    <!-- PAGE 6 : SÉQUENCE FINALE GÉANTE -->
+    <!-- PAGE 6 : SÉQUENCE FINALE -->
     <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="fermerPageFleurs()">
         <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
-        <div style="color: white; font-size: 1.2em; opacity: 0.9; margin-top: 20px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5);">Regarde toutes ces fleurs géantes éclater pour toi ! 😍💙</div>
+        <div style="color: white; font-size: 1.1em; opacity: 0.9; margin-top: 15px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0 10px;">Regarde toutes ces fleurs géantes éclater pour toi ! 😍💙</div>
         <div id="texteDelayed" class="texte-retardataire">Ce site a été créé spécialement pour toi.</div>
-        <button class="btn" style="max-width: 260px; margin-top: 40px; z-index: 10; background: #ffffff; color: #1e3a8a; font-size: 1.1em; box-shadow: 0 10px 25px rgba(0,0,0,0.3);" onclick="event.stopPropagation(); window.location.reload();">Retour à l'accueil 🏠</button>
+        <button class="btn" style="max-width: 260px; margin-top: 40px; z-index: 10; background: #ffffff; color: #1e3a8a; font-size: 1em; box-shadow: 0 10px 25px rgba(0,0,0,0.3);" onclick="event.stopPropagation(); window.location.reload();">Retour à l'accueil 🏠</button>
     </div>
 
     <script>
         let clicsRestants = 5;
         let intervalleFleurs;
-        let enveloppeA_EteOuverte = false; // Permet de verrouiller l'affichage du bouton de confirmation
+        let enveloppeA_EteOuverte = false;
 
-        // Écouteur global pour refermer l'enveloppe
+        // Clic à côté referme l'enveloppe sans cacher le bouton de confirmation
         document.addEventListener('click', function(e) {
             const env = document.getElementById('maEnveloppe');
             const wrapper = document.getElementById('wrapperEnveloppe');
             
             if (wrapper.style.display === 'flex' && env.classList.contains('open') && !env.contains(e.target)) {
                 env.classList.remove('open');
-                // On ne cache plus le bouton ici si l'enveloppe a déjà été ouverte une fois
             }
         });
 
@@ -559,7 +610,7 @@
             const errBox = document.getElementById('erreurHlel');
             
             if(select.value === "" || select.value === "bloque") {
-                errBox.innerText = "⚠️ Choisis une option valide pour le Vendredi 12 Juin ! 😉";
+                errBox.innerText = "⚠️ Choisissez une option valide pour le Vendredi 12 Juin ! 😉";
                 errBox.style.display = 'block';
                 errBox.style.animation = 'none';
                 setTimeout(() => { errBox.style.animation = 'shake 0.4s ease-in-out'; }, 10);
@@ -592,13 +643,12 @@
             
             if(!env.classList.contains('open')) {
                 env.classList.add('open');
-                enveloppeA_EteOuverte = true; // Flag activé pour de bon
+                enveloppeA_EteOuverte = true;
                 setTimeout(() => {
                     document.getElementById('btnConfirmationFinale').style.display = 'block';
-                }, 600);
+                }, 500);
             } else {
                 env.classList.remove('open');
-                // On ne masque pas le bouton car enveloppeA_EteOuverte est vrai et il doit rester visible pour de bon
             }
         }
 
@@ -608,11 +658,10 @@
 
         function declencherExplosionFinale() {
             document.getElementById('pageFinaleFleurs').style.display = 'flex';
-            document.getElementById('texteDelayed').classList.remove('visible'); // Reset
+            document.getElementById('texteDelayed').classList.remove('visible');
             grossePluieDeFleurs();
             genererFleursGeantes();
 
-            // Fait apparaître le texte personnalisé exactement 3 secondes après l'explosion
             setTimeout(() => {
                 document.getElementById('texteDelayed').classList.add('visible');
             }, 3000);
@@ -626,7 +675,7 @@
         function grossePluieDeFleurs() {
             var duration = 18 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 40, spread: 360, ticks: 90, zIndex: 999999 };
+            var defaults = { startVelocity: 35, spread: 360, ticks: 90, zIndex: 999999 };
 
             function randomInRange(min, max) {
               return Math.random() * (max - min) + min;
@@ -639,10 +688,10 @@
                 return clearInterval(interval);
               }
 
-              var particleCount = 80 * (timeLeft / duration);
+              var particleCount = 60 * (timeLeft / duration);
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
-            }, 200);
+            }, 250);
         }
 
         function genererFleursGeantes() {
@@ -655,11 +704,11 @@
                 fleur.innerText = typesFleurs[Math.floor(Math.random() * typesFleurs.length)];
                 
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 500 + 200; 
+                const distance = Math.random() * 300 + 150; 
                 const mx = Math.cos(angle) * distance + "px";
                 const my = Math.sin(angle) * distance + "px";
                 
-                const size = Math.random() * 4 + 4; 
+                const size = Math.random() * 2.5 + 2.5; 
                 const rot = Math.random() * 360 + 360 + "deg";
 
                 fleur.style.setProperty('--mx', mx);
@@ -671,7 +720,7 @@
                 conteneur.appendChild(fleur);
 
                 setTimeout(() => { fleur.remove(); }, 6500);
-            }, 100);
+            }, 150);
         }
     </script>
 </body>
