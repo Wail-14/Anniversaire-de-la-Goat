@@ -200,15 +200,16 @@
             animation: shake 0.4s ease-in-out;
         }
 
-        /* CORRECTION CORPS ET RABAT DE L'ENVELOPPE */
+        /* wrapper enveloppe avec plus d'espace en haut pour ne rien chevaucher */
         .wrapper-enveloppe {
             display: none;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: 60px;
             margin-bottom: 40px;
             perspective: 1000px;
             -webkit-perspective: 1000px;
         }
+        
         .enveloppe {
             position: relative;
             width: 200px;
@@ -223,18 +224,21 @@
         }
         .enveloppe:hover { transform: translateY(-5px); }
         
-        /* CORRECTION : Le rabat pointe désormais vers le BAS par défaut quand il est fermé */
+        /* Rabat de l'enveloppe (fermé vers le bas par défaut) */
         .enveloppe::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
             border-left: 100px solid transparent;
             border-right: 100px solid transparent;
-            border-top: 75px solid #3b82f6; /* Pointé vers le bas */
+            border-top: 75px solid #3b82f6;
             transform-origin: top;
-            transition: transform 0.4s ease 0.1s, z-index 0s 0.2s;
+            /* Transition fluide du rabat */
+            transition: transform 0.4s ease-in-out;
             z-index: 4;
         }
+        
+        /* Face avant de l'enveloppe */
         .enveloppe::after {
             content: '';
             position: absolute;
@@ -245,6 +249,8 @@
             border-radius: 0 0 12px 12px;
             z-index: 3;
         }
+        
+        /* Lettre à l'intérieur */
         .lettre {
             position: absolute;
             top: 10px; left: 10px;
@@ -257,7 +263,8 @@
             font-weight: 700;
             color: #1e3a8a;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.4s ease, z-index 0s 0.2s, opacity 0.3s;
+            /* Attribue un délai d'attente au départ pour laisser le rabat s'ouvrir */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, z-index 0s 0.35s, opacity 0.3s 0.35s;
             z-index: 2;
             overflow: hidden;
             display: flex;
@@ -266,13 +273,15 @@
             opacity: 0;
         }
         
-        /* COMPORTEMENT OUVERTURE */
+        /* ÉTAPE 1 : Le rabat pivote et s'ouvre vers le haut */
         .enveloppe.open::before {
-            transform: rotateX(180deg) translateY(75px); /* Se déplie vers le haut */
+            transform: rotateX(180deg);
             z-index: 1;
         }
+        
+        /* ÉTAPE 2 : La lettre sort de l'enveloppe après l'ouverture du rabat */
         .enveloppe.open .lettre {
-            transform: translateY(-90px) scale(1.25);
+            transform: translateY(-115px) scale(1.3);
             z-index: 5;
             height: auto;
             min-height: 110px;
@@ -345,19 +354,20 @@
             50% { transform: scale(1.03); }
         }
         
+        /* ANIMATION DES FLEURS PLUS RAPIDE ET INTENSE */
         .fleur-instanciee {
             position: absolute;
             pointer-events: none;
             opacity: 0;
-            animation: animationFleurGeante 6.5s linear forwards;
+            animation: animationFleurGeante 2.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
             z-index: 2;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
             line-height: 1;
         }
         @keyframes animationFleurGeante {
             0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; top: 50%; left: 50%; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
             100% { transform: translate(var(--mx), var(--my)) scale(var(--size)) rotate(var(--rot)); opacity: 0; top: 50%; left: 50%; }
         }
 
@@ -457,7 +467,7 @@
                 <button class="btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="verifierCalculAnniv()">Valider ma réponse 🧭</button>
             </div>
 
-            <!-- ENVELOPPE INTERACTIVE RÉPARÉE -->
+            <!-- ENVELOPPE INTERACTIVE DEUX TEMPS RÉPARÉE -->
             <div class="wrapper-enveloppe" id="wrapperEnveloppe">
                 <div class="enveloppe" id="maEnveloppe" onclick="clicEnveloppe(event)">
                     <div class="lettre">
@@ -475,9 +485,8 @@
             <p style="font-size: 1.15em; font-weight: 700; color: #1e3a8a;">Tu viens officiellement de réserver du temps avec ton goat préféré. 🎉</p>
             <p>Créneau bloqué : <br><strong id="dateValidee" style="color: #475569;"></strong></p>
             
-            <!-- AJOUT DE TA PHOTO SOUVENIR ICI -->
+            <!-- COIN PHOTO SOUVENIR -->
             <div class="zone-photo-souvenir">
-                <!-- Remplace simplement image_582659.png par le vrai lien ou nom de ta photo à l'avenir -->
                 <img src="image_582659.png" alt="Notre souvenir ensemble 💜">
             </div>
             
@@ -493,7 +502,7 @@
 
     </div>
 
-    <!-- PAGE 6 : SÉQUENCE FINALE -->
+    <!-- PAGE 6 : PLUIE DE FLEURS ULTRA CHARGÉE -->
     <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="fermerPageFleurs()">
         <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
         <div style="color: white; font-size: 1.1em; opacity: 0.9; margin-top: 15px; z-index: 10; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.5); padding: 0 10px;">Regarde toutes ces fleurs géantes éclater pour toi ! 😍💙</div>
@@ -506,7 +515,6 @@
         let intervalleFleurs;
         let enveloppeA_EteOuverte = false;
 
-        // Clic à côté referme l'enveloppe sans cacher le bouton de confirmation
         document.addEventListener('click', function(e) {
             const env = document.getElementById('maEnveloppe');
             const wrapper = document.getElementById('wrapperEnveloppe');
@@ -644,9 +652,10 @@
             if(!env.classList.contains('open')) {
                 env.classList.add('open');
                 enveloppeA_EteOuverte = true;
+                // Laisser le temps à la feuille de sortir avant d'afficher le bouton de validation
                 setTimeout(() => {
                     document.getElementById('btnConfirmationFinale').style.display = 'block';
-                }, 500);
+                }, 750);
             } else {
                 env.classList.remove('open');
             }
@@ -664,7 +673,7 @@
 
             setTimeout(() => {
                 document.getElementById('texteDelayed').classList.add('visible');
-            }, 3000);
+            }, 2500);
         }
 
         function fermerPageFleurs() {
@@ -675,7 +684,7 @@
         function grossePluieDeFleurs() {
             var duration = 18 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 35, spread: 360, ticks: 90, zIndex: 999999 };
+            var defaults = { startVelocity: 45, spread: 360, ticks: 60, zIndex: 999999 };
 
             function randomInRange(min, max) {
               return Math.random() * (max - min) + min;
@@ -688,27 +697,28 @@
                 return clearInterval(interval);
               }
 
-              var particleCount = 60 * (timeLeft / duration);
+              var particleCount = 80 * (timeLeft / duration);
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
               confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#3b82f6', '#60a5fa', '#e0aaff', '#ffffff', '#ff007f'] }));
-            }, 250);
+            }, 180); // Accéléré et plus dense
         }
 
         function genererFleursGeantes() {
             const typesFleurs = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '💐'];
             const conteneur = document.getElementById('pageFinaleFleurs');
 
+            // Fréquence d'apparition beaucoup plus haute (toutes les 60ms au lieu de 150ms)
             intervalleFleurs = setInterval(() => {
                 const fleur = document.createElement('div');
                 fleur.classList.add('fleur-instanciee');
                 fleur.innerText = typesFleurs[Math.floor(Math.random() * typesFleurs.length)];
                 
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 300 + 150; 
+                const distance = Math.random() * 350 + 150; 
                 const mx = Math.cos(angle) * distance + "px";
                 const my = Math.sin(angle) * distance + "px";
                 
-                const size = Math.random() * 2.5 + 2.5; 
+                const size = Math.random() * 3 + 2.5; 
                 const rot = Math.random() * 360 + 360 + "deg";
 
                 fleur.style.setProperty('--mx', mx);
@@ -719,8 +729,9 @@
 
                 conteneur.appendChild(fleur);
 
-                setTimeout(() => { fleur.remove(); }, 6500);
-            }, 150);
+                // Disparition calée sur la fin de la nouvelle animation rapide (2.5s)
+                setTimeout(() => { fleur.remove(); }, 2500);
+            }, 60);
         }
     </script>
 </body>
