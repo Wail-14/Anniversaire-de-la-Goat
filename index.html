@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Arige ! 🎉</title>
-    <!-- Bibliothèque de confettis/fleurs hébergée de manière ultra-fiable -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --nav-gradient: linear-gradient(135deg, #0f172a, #1e3a8a, #3b82f6);
@@ -78,47 +77,19 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
             text-align: center;
             display: none;
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Animation d'apparition normale (sans tremblement) */
-        .page-card.active { 
-            display: block; 
-            animation: fadeInNormale 0.4s ease-out forwards;
-        }
+        .page-card.active { display: block; }
 
-        @keyframes fadeInNormale {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h1 { color: #1e3a8a; font-size: 2.4em; margin-top: 0; margin-bottom: 20px; font-weight: 800; }
         h2 { color: #1e3a8a; font-size: 1.9em; font-weight: 700; margin-top: 0; }
         p { font-size: 1.1em; line-height: 1.6; color: #475569; margin-bottom: 30px; }
-
-        /* PANNEAU DANGER JAUNE / ROUGE */
-        .box-danger {
-            background: #fffbeb;
-            border: 2px solid #f59e0b;
-            border-left: 6px solid #ef4444;
-            padding: 20px;
-            border-radius: 16px;
-            margin: 25px 0;
-            text-align: left;
-        }
-        .box-danger .titre-danger {
-            color: #b45309;
-            font-weight: 800;
-            font-size: 1.15em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 5px;
-        }
-        .box-danger .texte-danger {
-            color: #7f1d1d;
-            font-weight: 700;
-            font-size: 1.1em;
-        }
 
         .btn {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
@@ -169,6 +140,7 @@
             display: none;
         }
 
+        /* ANIMATION ERREUR ANIMÉE (SHAKE) */
         .box-erreur {
             background: #fef2f2;
             border: 2px solid #ef4444;
@@ -197,60 +169,54 @@
 
     <div class="main-container">
 
-        <!-- PAGE 1 : ACCUEIL -->
+        <!-- PAGE 1 : INTRODUCTION BLAGUE -->
         <div class="page-card active" id="page1">
             <h1>Bienvenue Arige ! 🥳💜</h1>
-            <p>Petite mise en garde avant de commencer le visionnage de ton site :</p>
-            
-            <!-- ENCADRÉ DANGER JAUNE ET ROUGE -->
-            <div class="box-danger">
-                <div class="titre-danger">⚠️ MISE EN GARDE TECHNIQUE</div>
-                <div class="texte-danger">Ce site va te laisser penser avoir le choix... Mais en réalité, tu n'as absolument aucun choix ici. 👀</div>
-            </div>
-            
+            <p>Petite mise en garde avant de commencer : ce site va te laisser penser avoir le choix... <strong>Mais en réalité, tu n'as absolument aucun choix ici.</strong> C'est ma dictature d'anniversaire. 👀</p>
             <button class="btn" onclick="changerPage('page2')">Suivant ➡️</button>
         </div>
 
         <!-- PAGE 2 : L'INDICE CADEAU -->
         <div class="page-card" id="page2">
             <h2>🎁 Découvrir mon cadeau</h2>
-            <p id="texteIndiceIntro">Je sais que tu meurs d'envie de savoir ce que c'est. Fais ton choix (ou presque) :</p>
+            <p id="texteIndiceIntro">Je sais que tu meurs d'envie de savoir ce que c'est. Tu veux un indice exclusif maintenant ou tu préfères sagement garder la surprise ? 🤔</p>
             
-            <!-- BOUTONS INVERSÉS POUR LA PIÉGER -->
             <div id="blocBoutonsIndice">
-                <button class="btn" onclick="montrerIndice('surprise')">Je préfère sagement garder la surprise 😇</button>
-                <button class="btn btn-secondary" onclick="montrerIndice('indice')">Je veux l'indice immédiatement ! 😍</button>
+                <button class="btn" onclick="montrerIndice('oui')">Je veux l'indice immédiatement ! 😍</button>
+                <button class="btn btn-secondary" onclick="montrerIndice('non')">Je préfère garder la surprise 😇</button>
             </div>
 
             <div class="box-indice" id="zoneIndice"></div>
             
-            <!-- BLOC DES BOUTONS DE NAVIGATION DANS L'ORDRE DEMANDÉ -->
-            <div id="navigationIndice" style="display:none; margin-top: 25px;">
-                <button class="btn" onclick="changerPage('page3')">Passer à la suite ✨</button>
-                <button class="btn btn-secondary" onclick="retourAccueil()">⬅️ Retourner en arrière</button>
-            </div>
+            <!-- BOUTON RETOUR EN ARRIERE APRES INDICE OUI -->
+            <button class="btn btn-secondary" id="btnRetourArriere" style="display:none; margin-top: 15px;" onclick="retourAccueil()">⬅️ Retourner en arrière</button>
+            
+            <button class="btn" id="btnSuivantIndice" style="display:none; margin-top: 15px; background: #0f172a;" onclick="changerPage('page3')">Passer à la suite ✨</button>
         </div>
 
-        <!-- PAGE 3 : L'AGENDA (50 FOIS LE MEME VENDREDI) -->
+        <!-- PAGE 3 : L'AGENDA (VENDREDI 12 JUIN REPETE) -->
         <div class="page-card" id="page3">
             <h2>📅 Réserve ton moment !</h2>
-            <p>Pour fêter ça dignement, choisis ton créneau parmi la liste disponible :</p>
+            <p>Pour fêter ça dignement, choisis ton créneau. (Rappel : tu n'as pas le choix) 😉</p>
             
+            <!-- BLOC ERREUR ANIMÉ -->
             <div class="box-erreur" id="erreurHlel"></div>
             
             <select id="choixDate" onchange="verifierDateOption(this)">
                 <option value="" disabled selected>-- Choisis ton créneau --</option>
                 <option value="bloque">Tous les jours de la semaine (Accès VIP) 🔒</option>
-                <!-- Les 50 options vont être injectées ici via JavaScript automatiquement -->
+                <option value="Vendredi 12 Juin (Midi - Sortie avec la GOAT)">Vendredi 12 Juin (Midi - Sortie avec la GOAT) 🍽️</option>
+                <option value="Vendredi 12 Juin (Après-midi - Sortie avec la GOAT)">Vendredi 12 Juin (Après-midi - Sortie avec la GOAT) ☀️</option>
+                <option value="Vendredi 12 Juin (Soirée complète avec la GOAT)">Vendredi 12 Juin (Soirée complète avec la GOAT) 🌃</option>
             </select>
 
             <button class="btn" onclick="validerAgenda()">Passer à l'étape suivante 🔒</button>
         </div>
 
-        <!-- PAGE 4 : INDICE ACTIVITÉ SECRÈTE (TOTALEMENT FLOU) -->
+        <!-- PAGE 4 : INDICE ACTIVITÉ COMPLÈTEMENT FAUSSÉ -->
         <div class="page-card" id="page4">
             <h2>🎈 Un indice sur l'activité du Vendredi...</h2>
-            <p>Puisque le rendez-vous est pris pour le Vendredi 12 Juin, voici un indice sur ce qu'on va faire. Ne cherche pas trop compliqué...</p>
+            <p>Puisque le rendez-vous est pris pour le Vendredi 12 Juin, voici un indice sur ce qu'on va faire. Essaie de deviner si tu es forte...</p>
             
             <div class="box-indice" style="display:block; background: #fef3c7; border-color: #f59e0b; color: #78350f;">
                 "C'est une activité mystère où on va surtout partager un moment posé, un truc super chill pour couper du quotidien. Ramène juste ton sourire et ta bonne humeur, pas besoin de tenue d'astronaute, on reste dans le classique mais en mieux ! 🤫✨"
@@ -259,7 +225,7 @@
             <button class="btn" style="margin-top: 30px;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
         </div>
 
-        <!-- PAGE 5 : MESSAGE FINAL -->
+        <!-- PAGE 5 : MESSAGE FINAL AVEC EXPLOSION CONTINUE -->
         <div class="page-card" id="page5">
             <h2>✅ C'est validé pour le Vendredi 12 Juin !</h2>
             <p>Ton créneau est officiellement bloqué : <br><strong id="dateValidee" style="color: #2563eb; font-size: 1.25em;"></strong></p>
@@ -277,22 +243,16 @@
     </div>
 
     <script>
-        // Génération automatique des 50 options identiques au chargement
         window.onload = function() {
-            const select = document.getElementById('choixDate');
-            for (let i = 1; i <= 50; i++) {
-                let opt = document.createElement('option');
-                opt.value = `Vendredi 12 Juin (Sortie avec le GOAT) n°${i}`;
-                opt.innerHTML = `Vendredi 12 Juin (Sortie avec le GOAT) 📍`;
-                select.appendChild(opt);
-            }
             petitePluie();
         };
 
         function retourAccueil() {
             document.getElementById('blocBoutonsIndice').style.display = 'block';
             document.getElementById('zoneIndice').style.display = 'none';
-            document.getElementById('navigationIndice').style.display = 'none';
+            document.getElementById('btnSuivantIndice').style.display = 'none';
+            document.getElementById('btnRetourArriere').style.display = 'none';
+            document.getElementById('texteIndiceIntro').innerText = "Je sais que tu meurs d'envie de savoir ce que c'est. Tu veux un indice exclusif maintenant ou tu préfères sagement garder la surprise ? 🤔";
             document.getElementById('choixDate').selectedIndex = 0;
             document.getElementById('erreurHlel').style.display = 'none';
             changerPage('page1');
@@ -308,27 +268,32 @@
         function montrerIndice(choix) {
             const zone = document.getElementById('zoneIndice');
             const boutons = document.getElementById('blocBoutonsIndice');
-            const navIndice = document.getElementById('navigationIndice');
+            const btnSuivant = document.getElementById('btnSuivantIndice');
+            const btnRetour = document.getElementById('btnRetourArriere');
+            const texteIntro = document.getElementById('texteIndiceIntro');
             
-            boutons.style.display = 'none';
-
-            if(choix === 'indice') {
-                zone.innerHTML = "🚨 <strong>Je t'ai menti !</strong> C'est bel et bien un périphérique mais pas celui que tu penses... 🤫<br><br><span style='font-size:0.9em; color:#15803d;'>(Et oui, j'avais fait exprès d'inverser les deux boutons parce que je savais que tu cliquerais ici directement ! 🧠)</span>";
+            if(choix === 'oui') {
+                boutons.style.display = 'none';
+                zone.innerText = "🔍 INDICE GLOBAL :\n\"Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫\"";
                 zone.style.borderColor = "#22c55e"; zone.style.background = "#f0fdf4"; zone.style.color = "#166534";
+                zone.style.display = 'block';
+                btnSuivant.style.display = 'block';
+                btnRetour.style.display = 'block'; // Affiche le bouton retour en arrière
             } else {
-                zone.innerHTML = "🔍 <strong>Tu as voulu garder la surprise ? Raté !</strong> Dictature de l'anniversaire oblige, voici l'indice quand même :<br>\"Je t'ai menti c'est bel et bien un périphérique mais pas celui que tu penses 🤫\"";
-                zone.style.borderColor = "#3b82f6"; zone.style.background = "#eff6ff"; zone.style.color = "#1d4ed8";
+                // Elle refuse ? On relance la page en boucle avec le message forcé !
+                texteIntro.innerText = "🚨 T'es obligée de connaître l'indice sinon tu passeras jamais pour le créneau ! 😤 Recommence :";
+                // Animation de secousse pour montrer qu'on refuse son choix
+                document.getElementById('page2').style.animation = 'none';
+                setTimeout(() => { document.getElementById('page2').style.animation = 'shake 0.4s ease-in-out'; }, 10);
             }
-            
-            zone.style.display = 'block';
-            navIndice.style.display = 'block'; // Affiche "Passer à la suite" en haut et "Retour" en bas
         }
 
         function verifierDateOption(selectElement) {
             const errBox = document.getElementById('erreurHlel');
             if (selectElement.value === "bloque") {
-                errBox.innerText = "🔒 Malheureusement vous n'avez pas encore passé la bague au doigt à votre hlelouch pour bénéficier de cela ! 💍😂 Choisissez un autre jour dans la liste.";
+                errBox.innerText = "🔒 Malheureusement vous n'avez pas encore passé la bague au doigt à votre hlelouch pour bénéficier de cela ! 💍😂 Choisissez un autre jour (enfin... l'autre vendredi).";
                 errBox.style.display = 'block';
+                // Relance l'animation de secousse
                 errBox.style.animation = 'none';
                 setTimeout(() => { errBox.style.animation = 'shake 0.4s ease-in-out'; }, 10);
                 selectElement.selectedIndex = 0;
@@ -340,38 +305,38 @@
         function validerAgenda() {
             const select = document.getElementById('choixDate');
             if(select.value === "" || select.value === "bloque") {
-                alert("Sélectionne une des options de la liste ! 😉");
+                alert("Choisis une option valide pour le Vendredi 12 Juin ! 😉");
                 return;
             }
-            // Nettoie le numéro de l'option pour l'affichage propre final
-            document.getElementById('dateValidee').innerText = "Vendredi 12 Juin (Sortie avec le GOAT) ✨";
+            document.getElementById('dateValidee').innerText = select.value;
             changerPage('page4');
         }
 
         function finaliserReservation() {
             changerPage('page5');
-            // Appel direct et répété pour assurer la grosse tempête de fleurs
-            setTimeout(grossePluieDeFleurs, 100);
+            // Lance la rafale infinie/longue de fleurs
+            grossePluieDeFleurs();
         }
 
         function petitePluie() {
-            if (typeof confetti !== 'undefined') {
-                confetti({ particleCount: 8, spread: 40, origin: { y: 0.8 } });
-            }
+            var scalar = 2;
+            var f1 = confetti.shapeFromText({ text: '🌸', scalar });
+            var f2 = confetti.shapeFromText({ text: '🌹', scalar });
+            confetti({ particleCount: 10, spread: 50, shapes: [f1, f2], scalar });
         }
 
-        // LE SYSTÈME DE FLEURS EN RAFALE ENFIN FONCTIONNEL
         function grossePluieDeFleurs() {
-            var duration = 5 * 1000;
+            var duration = 6 * 1000; // Augmenté à 6 secondes d'explosion totale !
             var end = Date.now() + duration;
-            var scalar = 2.3;
+            var scalar = 2.5;
             var f1 = confetti.shapeFromText({ text: '🌸', scalar });
             var f2 = confetti.shapeFromText({ text: '🌹', scalar });
             var f3 = confetti.shapeFromText({ text: '🌷', scalar });
+            var f4 = confetti.shapeFromText({ text: '🌻', scalar });
 
             (function frame() {
-                confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0, y: 0.75 }, shapes: [f1, f2, f3], scalar });
-                confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1, y: 0.75 }, shapes: [f1, f2, f3], scalar });
+                confetti({ particleCount: 5, angle: 60, spread: 65, origin: { x: 0, y: 0.7 }, shapes: [f1, f2, f3, f4], scalar });
+                confetti({ particleCount: 5, angle: 120, spread: 65, origin: { x: 1, y: 0.7 }, shapes: [f1, f2, f3, f4], scalar });
 
                 if (Date.now() < end) {
                     requestAnimationFrame(frame);
