@@ -195,11 +195,11 @@
 
     <div class="main-container">
 
-        <!-- PAGE 1 : ACCUEIL -->
+        <!-- PAGE 1 : ACCUEIL (CORRIGÉE AVEC LE COEUR 💖) -->
         <div class="page-card active" id="page1">
-            <h1>Joyeux Anniversaire ! 🥳</h1>
+            <h1>Joyeux Anniversaire ! 🥳💖</h1>
             <p>Aujourd'hui c'est ta journée, Arige. Pas de message classique sur WhatsApp, tu mérites un vrai traitement de faveur. J'ai conçu cette application uniquement pour toi. Prête à commencer ?</p>
-            <button class="btn" onclick="continuerVersPage2()">Découvrir mon cadeau ➡️</button>
+            <button class="btn" onclick="changerPage('page2')">Découvrir mon cadeau ➡️</button>
         </div>
 
         <!-- PAGE 2 : L'INDICE CADEAU -->
@@ -286,11 +286,7 @@
             document.querySelectorAll('.page-card').forEach(card => card.classList.remove('active'));
             document.getElementById(idPage).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function continuerVersPage2() {
-            pluieDeFleurs(); // Petite explosion festive pour la transition
-            changerPage('page2');
+            pluieDeFleurs(); // Lance des fleurs à chaque changement de page réussi !
         }
 
         function montrerIndice(choix) {
@@ -325,8 +321,6 @@
             
             document.getElementById('dateValidee').innerText = dateSelectionnee;
             changerPage('page4');
-            // Grosse explosion finale de fleurs
-            setTimeout(pluieDeFleurs, 300);
         }
     </script>
 </body>
