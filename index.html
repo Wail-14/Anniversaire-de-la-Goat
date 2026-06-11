@@ -191,30 +191,116 @@
             animation: shake 0.4s ease-in-out;
         }
 
-        /* ANNONCE FINALE ANIMÉE */
-        #pancarteAnnivFinale {
+        /* NYSTÈME ENVELOPPE INTERACTIVE INDICE */
+        .wrapper-enveloppe {
             display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.5);
-            background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6);
-            color: white;
-            padding: 40px;
-            border-radius: 30px;
-            font-size: 2em;
-            font-weight: 900;
-            text-align: center;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
-            z-index: 9999;
-            width: 85%;
-            max-width: 500px;
-            border: 5px solid white;
-            animation: zoomEnorme 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            justify-content: center;
+            margin: 30px 0;
+            perspective: 1000px;
+        }
+        .enveloppe {
+            position: relative;
+            width: 200px;
+            height: 140px;
+            background: #3b82f6;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .enveloppe:hover { transform: translateY(-5px); }
+        .enveloppe::before {
+            content: '';
+            position: absolute;
+            top: -100px; left: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 100px solid #3b82f6;
+            transform-origin: bottom;
+            transition: transform 0.4s 0.2s;
+            z-index: 3;
+        }
+        .enveloppe::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            border-left: 100px solid #2563eb;
+            border-right: 100px solid #1d4ed8;
+            border-top: 70px solid transparent;
+            border-radius: 0 0 12px 12px;
+            z-index: 4;
+        }
+        .lettre {
+            position: absolute;
+            top: 10px; left: 10px;
+            width: 180px; height: 110px;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 12px;
+            box-sizing: border-box;
+            font-size: 0.75em;
+            font-weight: 700;
+            color: #1e3a8a;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.5s, z-index 0s 0.2s;
+            z-index: 2;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Classe d'ouverture de l'enveloppe */
+        .enveloppe.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .enveloppe.open .lettre {
+            transform: translateY(-90px) scale(1.3);
+            z-index: 5;
+            height: auto;
+            min-height: 110px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+            border: 2px solid #3b82f6;
         }
 
-        @keyframes zoomEnorme {
-            to { transform: translate(-50%, -50%) scale(1); }
+        /* PAGE SPECIAL FLEURS ET CADRE FINAL */
+        .page-fleurs-geantes {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #fbcfe8, #f472b6, #db2777, #4c1d95);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+        }
+        .titre-floral-geant {
+            color: white;
+            font-size: 3.5em;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 40px rgba(236,72,153,0.6);
+            z-index: 10;
+            padding: 20px;
+            animation: pulseFete 1.5s infinite ease-in-out;
+        }
+        @keyframes pulseFete {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .fleur-instanciee {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            animation: animationFleurGeante 6s linear forwards;
+            z-index: 2;
+        }
+        @keyframes animationFleurGeante {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; top: 50%; left: 50%; }
+            15% { opacity: 0.9; }
+            100% { transform: translate(var(--mx), var(--my)) scale(var(--size)) rotate(var(--rot)); opacity: 0; top: 50%; left: 50%; }
         }
 
         @keyframes shake {
@@ -283,7 +369,7 @@
             <button class="btn" onclick="validerAgenda()">Passer à l'étape suivante 🔒</button>
         </div>
 
-        <!-- PAGE 4 : ENIGME CALCUL DES ENFANTS SUR LES ANNIVERSAIRES -->
+        <!-- PAGE 4 : ENIGME CALCUL SUR LES ANNIVERSAIRES -->
         <div class="page-card" id="page4">
             <h2>🎈 Un indice sur l'activité du Vendredi...</h2>
             <p id="consigneActivite">Pour déverrouiller l'indice de l'activité, réponds à cette question secrète : <br><br><strong>Combien de jours séparent l'anniversaire du GOAT (28 mai) et ton anniversaire (11 juin) ? 🤔</strong></p>
@@ -295,13 +381,13 @@
                 <button class="btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="verifierCalculAnniv()">Valider ma réponse 🧭</button>
             </div>
 
-            <!-- COIN DE TEXTE ET INDICES CACHÉS AU DÉBUT -->
-            <div id="zoneTexteForcee" style="display: none; background: #fef3c7; border: 2px solid #f59e0b; color: #78350f; padding: 20px; border-radius: 16px; margin-top: 15px; font-weight: 700; line-height: 1.5;">
-                "Tu te déplaceras sans vraiment choisir la direction. Si tu veux un autre indice, attends le vendredi 12 juin."
-            </div>
-
-            <div class="box-pancarte-bleue" id="zoneIndiceActivite" style="margin-top: 20px; background: #f8fafc; border-color: #cbd5e1; color: #475569; text-shadow: none;">
-                "C'est une activité mystère où on va surtout partager un moment posé, un truc super chill pour couper du quotidien. Ramène juste ton sourire et ta bonne humeur, pas besoin de tenue d'astronaute, on reste dans le classique mais en mieux ! 🤫✨"
+            <!-- CONTENEUR DE L'ENVELOPPE CACHÉE AU DÉBUT -->
+            <div class="wrapper-enveloppe" id="wrapperEnveloppe">
+                <div class="enveloppe" id="maEnveloppe" onclick="ouvrirEnveloppeIndice()">
+                    <div class="lettre">
+                        "Tu te déplaceras sans vraiment choisir la direction. Si tu veux un autre indice, attends le vendredi 12 juin."
+                    </div>
+                </div>
             </div>
             
             <button class="btn" id="btnConfirmationFinale" style="margin-top: 30px; display: none;" onclick="finaliserReservation()">Confirmer définitivement ! 🚀</button>
@@ -316,7 +402,7 @@
             
             <h3>Mon petit mot pour toi 💖</h3>
             <p style="text-align: left; font-size: 1.05em; background: #f8fafc; padding: 20px; border-radius: 16px; border-left: 4px solid #2563eb;">
-                [J'espère que ce petit cadeau t'aura fait sourire. Parmi toutes les personnes que j'ai eu la chance de rencontrer, tu fais partie de celles qui comptent vraiment. Merci pour tous les souvenirs, les rires et les moments partagés. J'espère que cette journée sera aussi spéciale que toi. Joyeux anniversaire. 💙 .]
+                J'espère que ce petit cadeau t'aura fait sourire. Parmi toutes les personnes que j'ai eu la chance de rencontrer, tu fais partie de celles qui comptent vraiment. Merci pour tous les souvenirs, les rires et les moments partagés. J'espère que cette journée sera aussi spéciale que toi. Joyeux anniversaire. 💙 .
             </p>
             
             <button class="btn" style="background: linear-gradient(135deg, #ec4899, #db2777); font-size: 1.2em; padding: 20px;" onclick="declencherExplosionFinale()">🎁 LE CADEAU DE FIN ! 🎁</button>
@@ -324,17 +410,28 @@
 
     </div>
 
-    <!-- PANCARTE GÉANTE SURPRISE FLOTTANTE -->
-    <div id="pancarteAnnivFinale" onclick="this.style.display='none'">
-        🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨
-        <div style="font-size: 0.5em; margin-top: 15px; font-weight: normal; opacity: 0.9;">(Clique pour fermer)</div>
+    <!-- PAGE 6 : NOUVELLE PAGE PLEIN ÉCRAN ANIMATIONS GÉANTES DE FLEURS -->
+    <div id="pageFinaleFleurs" class="page-fleurs-geantes" onclick="this.style.display='none'; clearInterval(intervalleFleurs);">
+        <div class="titre-floral-geant">🎉 JOYEUX ANNIVERSAIRE ARIGE ! 💜🌸✨</div>
+        <div style="color: white; font-size: 1.1em; opacity: 0.8; margin-top: 20px; z-index: 10; font-weight: 600;">Regarde toutes ces fleurs éclater pour toi ! 😍</div>
+        <button class="btn" style="max-width: 200px; margin-top: 40px; z-index: 10; background: white; color: #db2777;" onclick="window.location.reload()">Recommencer 🔄</button>
     </div>
 
     <script>
         let clicsRestants = 5;
+        let intervalleFleurs;
 
         function retourZero() {
             retourIndice();
+            // RE-INITIALISATION PARFAITE DE LA PAGE 4 AUSSI !
+            document.getElementById('erreurCalcul').style.display = 'none';
+            document.getElementById('blocCalculSecret').style.display = 'block';
+            document.getElementById('reponseJours').value = '';
+            document.getElementById('consigneActivite').innerHTML = "Pour déverrouiller l'indice de l'activité, réponds à cette question secrète : <br><br><strong>Combien de jours séparent l'anniversaire du GOAT (28 mai) et ton anniversaire (11 juin) ? 🤔</strong>";
+            document.getElementById('wrapperEnveloppe').style.display = 'none';
+            document.getElementById('maEnveloppe').classList.remove('open');
+            document.getElementById('btnConfirmationFinale').style.display = 'none';
+            
             changerPage('page1');
         }
 
@@ -359,7 +456,6 @@
         }
 
         function ouvrirMiniJeuCadeau() {
-            // Nettoyage parfait des textes d'erreur pour ne laisser que le mini-jeu clean
             document.getElementById('texteIndiceIntro').innerText = "C'est parti ! Déverrouille ton accès... 👇";
             document.getElementById('blocBoutonsIndice').style.display = 'none';
             document.getElementById('containerSpamCadeau').style.display = 'block';
@@ -438,12 +534,10 @@
             if(parseInt(reponse) === 14) {
                 errBox.style.display = 'none';
                 document.getElementById('blocCalculSecret').style.display = 'none';
-                document.getElementById('consigneActivite').innerHTML = "🎉 <strong>Calcul validé ! Tu es une fast learner.</strong> Voici les détails :";
+                document.getElementById('consigneActivite').innerHTML = "🎉 <strong>Calcul validé ! Tu es une fast learner.</strong><br>Clique sur l'enveloppe bleue pour découvrir l'indice :";
                 
-                // Affichage des indices cachés
-                document.getElementById('zoneTexteForcee').style.display = 'block';
-                document.getElementById('zoneIndiceActivite').style.display = 'block';
-                document.getElementById('btnConfirmationFinale').style.display = 'block';
+                // On affiche la belle enveloppe
+                document.getElementById('wrapperEnveloppe').style.display = 'flex';
             } else {
                 errBox.style.display = 'block';
                 pageCard.style.animation = 'none';
@@ -451,20 +545,33 @@
             }
         }
 
+        function ouvrirEnveloppeIndice() {
+            const env = document.getElementById('maEnveloppe');
+            if(!env.classList.contains('open')) {
+                env.classList.add('open');
+                // Affiche le bouton final uniquement après l'ouverture
+                setTimeout(() => {
+                    document.getElementById('btnConfirmationFinale').style.display = 'block';
+                }, 600);
+            }
+        }
+
         function finaliserReservation() {
             changerPage('page5');
         }
 
-        // REJETER LES FLEURS + POP-UP DESIGN DE FIN
+        // APPARITION DE LA NOUVELLE PAGE AVEC SÉQUENCE DE FLEURS IMMENSES
         function declencherExplosionFinale() {
-            document.getElementById('pancarteAnnivFinale').style.display = 'block';
+            document.getElementById('pageFinaleFleurs').style.display = 'flex';
             grossePluieDeFleurs();
+            genererFleursGeantes();
         }
 
+        // Pluie de confettis en arrière-plan
         function grossePluieDeFleurs() {
-            var duration = 5 * 1000;
+            var duration = 15 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 99999 };
+            var defaults = { startVelocity: 35, spread: 360, ticks: 80, zIndex: 999999 };
 
             function randomInRange(min, max) {
               return Math.random() * (max - min) + min;
@@ -477,11 +584,41 @@
                 return clearInterval(interval);
               }
 
-              var particleCount = 60 * (timeLeft / duration);
-              // Explosion massive et ultra-sûre de couleurs festives fleuries
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#ec4899', '#ff007f', '#e0aaff', '#ffb703', '#ffffff'] }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#ec4899', '#ff007f', '#e0aaff', '#ffb703', '#ffffff'] }));
-            }, 200);
+              var particleCount = 70 * (timeLeft / duration);
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 }, colors: ['#ec4899', '#ff007f', '#e0aaff', '#ffffff'] }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 }, colors: ['#ec4899', '#ff007f', '#e0aaff', '#ffffff'] }));
+            }, 250);
+        }
+
+        // Création dynamique de grosses fleurs volantes sur l'écran
+        function genererFleursGeantes() {
+            const typesFleurs = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷'];
+            const conteneur = document.getElementById('pageFinaleFleurs');
+
+            intervalleFleurs = setInterval(() => {
+                const fleur = document.createElement('div');
+                fleur.classList.add('fleur-instanciee');
+                fleur.innerText = typesFleurs[Math.floor(Math.random() * typesFleurs.length)];
+                
+                // Définition de variables aléatoires CSS pour l'animation d'explosion depuis le centre
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 400 + 150; // Distance de projection
+                const mx = Math.cos(angle) * distance + "px";
+                const my = Math.sin(angle) * distance + "px";
+                const size = Math.random() * 3 + 2; // Taille géante (x2 à x5)
+                const rot = Math.random() * 360 + 180 + "deg";
+
+                fleur.style.setProperty('--mx', mx);
+                fleur.style.setProperty('--my', my);
+                fleur.style.setProperty('--size', size);
+                fleur.style.setProperty('--rot', rot);
+                fleur.style.fontSize = "20px";
+
+                conteneur.appendChild(fleur);
+
+                // Destruction du DOM après l'animation
+                setTimeout(() => { fleur.remove(); }, 6000);
+            }, 150);
         }
     </script>
 </body>
